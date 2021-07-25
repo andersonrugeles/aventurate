@@ -564,7 +564,7 @@ const Translate = function(options = {}) {
   }
 
   const defaults = {
-    from: "en",
+    from: "es",
     to: "en",
     cache: undefined,
     language: language,

@@ -3356,11 +3356,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\luchi\\Downloads\\WebAppAventurate\\WebAppAventurate\\Models\\Models.csproj",
+      "projectUniqueName": "C:\\Users\\luchi\\source\\repos\\aventurate\\Models\\Models.csproj",
       "projectName": "Models",
-      "projectPath": "C:\\Users\\luchi\\Downloads\\WebAppAventurate\\WebAppAventurate\\Models\\Models.csproj",
+      "projectPath": "C:\\Users\\luchi\\source\\repos\\aventurate\\Models\\Models.csproj",
       "packagesPath": "C:\\Users\\luchi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\luchi\\Downloads\\WebAppAventurate\\WebAppAventurate\\Models\\obj\\",
+      "outputPath": "C:\\Users\\luchi\\source\\repos\\aventurate\\Models\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

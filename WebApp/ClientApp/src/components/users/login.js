@@ -89,12 +89,12 @@ class Login extends Component {
 
     async traducir() {
         var ln = navigator.language || navigator.userLanguage;
-
         let lblDescripcion = "";
         if (ln == 'en') {
             lblDescripcion = await translate('Entrar', { to: "en", engine: "libre" });
 
         } else if (ln == 'es-ES') {
+            console.log('aqui');
             lblDescripcion = await translate(this.state.sede.Descripcion, { to: "en", engine: "libre" });
         }
        

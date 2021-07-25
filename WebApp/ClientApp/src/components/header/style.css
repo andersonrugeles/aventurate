@@ -27,6 +27,17 @@
     }
 
 
+.div-spain img {
+    width: 26px;
+    padding-right:4px;
+    cursor:pointer;
+}
+.div-spain {
+    padding: 0px 4px 0px 4px;
+}
+
+
+
 
 
 .topnav {
@@ -106,7 +117,6 @@
         .topnav a.icon {
             display: block;
         }
-
     
 }
 
@@ -126,7 +136,9 @@
     .content-logo {
         display: none;
     }
-
+    .div-spain {
+        margin-left: 30px;
+    }
     
 
     .content-logo-sm {

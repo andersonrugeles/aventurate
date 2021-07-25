@@ -8,6 +8,9 @@ import { HeaderActions } from '../header/actions';
 import {  Row, Col} from 'react-bootstrap';
 import { usuarioActions } from '../users/actions';
 import { Link } from "react-router-dom";
+import Spain from '../../img/generales/espana.png';
+import English from '../../img/generales/eeuu.png';
+import translate from "../helpers/translate";
 
 class Header extends Component {
 
@@ -15,18 +18,26 @@ class Header extends Component {
 
     constructor() {
         super();
+        this.state = {
+            lblBlog: '',
+            lblFotos: '',
+            lblInicio: '',
+            lblSomos: '',
+            lblContacto:''
+        };
         this.MostrarMenu = this.MostrarMenu.bind(this);
         this.MostrarLogin = this.MostrarLogin.bind(this);
         this.Logout = this.Logout.bind(this);
         this.ItemClick = this.ItemClick.bind(this);
+        this.TranslateSpanish = this.TranslateSpanish.bind(this);
+        this.TranslateEnglish = this.TranslateEnglish.bind(this);
+        this.traducir = this.traducir.bind(this);
         
     }
 
     ItemClick = e => {
         e.stopPropagation();
         e.preventDefault();
-
-        console.log(e.target.id);
 
         if (this.props.id_item_menu !== '') {
 
@@ -39,7 +50,31 @@ class Header extends Component {
        
         
     }
+    TranslateSpanish() {
+        localStorage.setItem('lenguaje', 'español');
+        this.traducir();
+    }
+    TranslateEnglish() {
+        localStorage.setItem('lenguaje', 'ingles');
+        this.traducir();
+    }
 
+    async traducir() {
+        if (localStorage.getItem('lenguaje') === 'español') {
+            this.setState({
+                lblContacto: await translate('Contacto', { to: "es", engine: "libre" })
+            });
+
+
+        } else if (localStorage.getItem('lenguaje') === 'ingles') {
+            this.setState({
+                lblContacto: await translate('Hola', { to: "en", engine: "libre" })
+            });
+        }
+ 
+
+
+    }
     
     MostrarMenu(e) {
         e.stopPropagation();
@@ -159,19 +194,21 @@ class Header extends Component {
                                         </Link>
                                     </div>
 
-                                    <div onClick={this.ItemClick} id='contacto'  >
+                                    <div onClick={this.ItemClick} id='contacto'>
                                         <Link to="/contacto" id='contacto' className={this.props.id_item_menu === "contacto" ? "active" : ""}  >
                                             <Row>
                                                 <Col xs={12} md={12} className="text-center" id='contacto'>Contacto</Col>
                                             </Row>
                                         </Link>
                                 </div>
-                                <div onClick={this.ItemClick} id='start'  >
-                                    <Link to="/start" id='start' className={this.props.id_item_menu === "contacto" ? "active" : ""}  >
-                                        <Row>
-                                            <Col xs={12} md={12} className="text-center" id='contacto'>Start</Col>
-                                        </Row>
-                                    </Link>
+                                <div>
+                                    <Row>
+                                        <Col xs={12} md={12} className="div-spain" id='contacto'>
+                                            <img src={Spain} alt="Spain" className="spain" onClick={this.TranslateSpanish} />
+                                            <img src={English} alt="Spain" className="spain" onClick={this.TranslateEnglish} />
+                                        </Col>
+
+                                    </Row>
                                 </div>
                                 </div>
                                 :

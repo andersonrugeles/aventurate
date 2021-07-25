@@ -54,7 +54,6 @@
     <Folder Include="ClientApp\src\components\sede\" />
     <Folder Include="ClientApp\src\components\subcategorias\" />
     <Folder Include="ClientApp\src\components\users\forms\" />
-    <Folder Include="ClientApp\src\img\generales\" />
     <Folder Include="images\" />
   </ItemGroup>
 

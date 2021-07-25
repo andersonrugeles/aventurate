@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TpBENoO2WkROsAPlQeamosbw5fAVdEru/RN3fv6dRLUq5R85+B1Sbel+OX7F38Q7R+O2VgIBgqdeDtRYFeqJtA==",
+  "dgSpecHash": "pFTxCMBY8HRkJtt+nXXWyeWouMs/5gzRGdvTHajkv21MEIM0u6JUznboOjZ+2GMqiXemHHMb2iJeUetY1P9QwA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\luchi\\Downloads\\WebAppAventurate\\WebAppAventurate\\Models\\Models.csproj",
+  "projectFilePath": "C:\\Users\\luchi\\source\\repos\\aventurate\\Models\\Models.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\luchi\\.nuget\\packages\\efcore.shaman\\1.0.18351.81\\efcore.shaman.1.0.18351.81.nupkg.sha512",
     "C:\\Users\\luchi\\.nuget\\packages\\jetbrains.annotations\\2018.2.1\\jetbrains.annotations.2018.2.1.nupkg.sha512",
