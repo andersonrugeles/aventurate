@@ -10,6 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import RoomIcon from '@material-ui/icons/Room';
 import { loader } from '../../helpers/loader';
+import translate from "../../helpers/translate";
 
 
 class FiltroSubCategorias extends Component {
@@ -21,9 +22,15 @@ class FiltroSubCategorias extends Component {
 
     constructor(props) {
         super(props);
-        
+        this.state = {
+            lblText1: '',
+            lblNombreCategoria: '',
+            lblNombreSubcategoria:''
+        };
+
         this.FiltroChangeHandler = this.FiltroChangeHandler.bind(this);
         this.SelectAll = this.SelectAll.bind(this);
+        this.traducir = this.traducir.bind(this); 
         
         
     }
@@ -89,7 +96,21 @@ class FiltroSubCategorias extends Component {
     componentDidMount() {
         loader.show();
         this.props.obtener_subcategorias(this.props.idCategoria, this);
+        this.traducir();
 
+    }
+    async traducir() {
+        if (localStorage.getItem('lenguaje') === 'español') {
+            this.setState({
+                lblText1: await translate('Seleccionar Todos', { to: "es", engine: "libre" }),
+                lblNombreCategoria: await translate(this.props.nombreCategoria, { to: "es", engine: "libre" })
+            });
+        } else if (localStorage.getItem('lenguaje') === 'ingles') {
+            this.setState({
+                lblText1: await translate('Seleccionar Todos', { to: "en", engine: "libre" }),
+                lblNombreCategoria: await translate(this.props.nombreCategoria, { to: "en", engine: "libre" })
+            });
+        }
     }
 
 
@@ -110,7 +131,7 @@ class FiltroSubCategorias extends Component {
             >
                 <Modal.Header  >
                     <Modal.Title id="contained-modal-title-vcenter" className="text-center">
-                        {this.props.nombreCategoria}
+                        {this.state.lblNombreCategoria === '' ? this.props.nombreCategoria : this.state.lblNombreCategoria}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -118,7 +139,7 @@ class FiltroSubCategorias extends Component {
                         <ListGroup.Item  >
                             <FormControlLabel
                                 control={<Checkbox id={`item-f-0`} checked={this.state.selected} onChange={(e, data) => this.FiltroChangeHandler({ IdCategoriaSubcategoria: 0 }, data)} icon={<RoomOutlinedIcon fontSize="large" style={{ fill: "#97BF13" }} />} checkedIcon={<RoomIcon fontSize="large" style={{ fill: "#97BF13" }} />} />}
-                                label={<span >Seleccionar todos</span>  }
+                                label={<span >{this.state.lblText1 === "" ? "Seleccionar Todos" : this.state.lblText1}</span>}
 
                             />
                         </ListGroup.Item>
