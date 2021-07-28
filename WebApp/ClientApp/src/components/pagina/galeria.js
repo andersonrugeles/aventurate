@@ -37,7 +37,7 @@ class Galeria extends Component {
     }
 
     close(e) {
-        console.log(e);
+       
         this.setState({
             show: false
         });

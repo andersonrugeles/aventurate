@@ -29,8 +29,8 @@ const AppRoutes = () =>
             <Switch>
                 <PublicRoute restricted={true} component={Login} path="/start" exact />
                 <PublicRoute component={MapView} path="/" exact />
-                <PublicRoute component={PerfilSede} path="/sitio" exact />
-                <PublicRoute component={PerfilMunicipio} path="/municipio" exact />
+                <PublicRoute component={PerfilSede} path="/sitio/:id" exact />
+                <PublicRoute component={PerfilMunicipio} path="/municipio/:id" exact />
                 <PublicRoute component={QuienesSomos} path="/quienes_somos" exact />
                 <PublicRoute component={Blog} path="/blog" exact />
                 <PublicRoute component={Galeria} path="/galeria" exact />

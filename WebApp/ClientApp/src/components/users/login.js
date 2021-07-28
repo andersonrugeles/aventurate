@@ -7,7 +7,7 @@ import { loader } from '../helpers/loader';
 import { alertActions } from '../alert_message/actions';
 import { Row, Col} from 'react-bootstrap';
 import Header from '../header/index';
-import  translate  from "../helpers/translate";
+
 
 
 class Login extends Component {
@@ -22,16 +22,13 @@ class Login extends Component {
             contrasena: '',
             codigoSede: '',
             itemSelecionado: '',
-            lblCodigo: '',
-            lblContrasena: '',
-            lblDescripcion:''
         };
 
       
         this.InputChange = this.InputChange.bind(this);
         this.LoginSubmit = this.LoginSubmit.bind(this);
         this.Atras = this.Atras.bind(this);
-        this.traducir = this.traducir.bind(this);
+      
     }
 
     InputChange(e) {
@@ -47,10 +44,6 @@ class Login extends Component {
         if (user) {
             this.props.history.push("/ventana");
         }
-
-        //const text = await translate("Hello world", { to: "es", engine: "libre" });
-
-        this.traducir();
 
         loader.hide();
     }
@@ -87,24 +80,7 @@ class Login extends Component {
     }
 
 
-    async traducir() {
-        var ln = navigator.language || navigator.userLanguage;
-        let lblDescripcion = "";
-        if (ln == 'en') {
-            lblDescripcion = await translate('Entrar', { to: "en", engine: "libre" });
-
-        } else if (ln == 'es-ES') {
-            console.log('aqui');
-            lblDescripcion = await translate(this.state.sede.Descripcion, { to: "en", engine: "libre" });
-        }
-       
-            this.setState({
-                lblDescripcion
-            });
-       
-      
-
-    }
+    
 
 
 
@@ -122,15 +98,15 @@ class Login extends Component {
                         <div className="form-group" id="codigo">
                             <div className="input-group">
                                         <span className="input-group-text"><i className="fa fa-user" /></span>
-                                        <input type="text" ref='codigo' className="form-control" name="codigo" placeholder={this.state.lblCodigo} value={codigo} onChange={this.InputChange} />
+                                        <input type="text" ref='codigo' className="form-control" name="codigo" placeholder="Codigo" value={codigo} onChange={this.InputChange} />
                             </div>
                         </div>
 
                         <div className="form-group" id="password">
                             <div className="input-group">
                                         <span className="input-group-text"><i className="fa fa-lock" /></span>
-                                        <input type="password" className="form-control" name="contrasena" placeholder={this.state.lblContrasena} value={contrasena} onChange={this.InputChange} />
-                            </div>
+                                        <input type="password" className="form-control" name="contrasena" placeholder="Contraseña" value={contrasena} onChange={this.InputChange} />
+                            </div>  
                         </div>
                                 <Row className="m-0 p-0 " >
                                     <Col className="m-0 p-0 mr-2" onClick={this.LoginSubmit}> <button className="btn btn-default btn-3d-style  btn-block">Entrar </button></Col>

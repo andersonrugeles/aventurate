@@ -11,6 +11,8 @@
 @import '../node_modules/@syncfusion/ej2-react-calendars/styles/material.css';
 @import "../node_modules/react-leaflet-markercluster/dist/styles.min.css";
 
+@import "../node_modules/react-image-gallery/styles/css/image-gallery.css";
+
 /* ---------------------------------------------------
     ESTILOS GLOBALES DE LA PLATAFORMA
 ----------------------------------------------------- */
@@ -95,6 +97,8 @@ label:focus,
 img{
     width:100%;
 }
+
+
 
 p {
     font-family: 'Poppins', sans-serif;
@@ -292,6 +296,17 @@ a{
         transform: translateY(2px);
     }
 
+
+#logreg-forms .facebook-btn {
+    background-color: #3C589C;
+}
+
+#logreg-forms .social-btn {
+    font-weight: 100;
+    color: white;
+    width: 100%;
+    font-size: 0.9rem;
+}
 /* ---------------------------------------------------
     RELATIVE MENU STYLE
 ----------------------------------------------------- */
@@ -428,6 +443,17 @@ a{
     content: "Line 1\A Line 2\A Line 3\A";
 }
 
+
+.share-btn > a {
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 12px;
+    font-family: Verdana, Arial;
+}
+
+    .share-btn > a:hover {
+        cursor: pointer;
+    }
 
 /* ---------------------------------------------------
     BUTTONS  GRID

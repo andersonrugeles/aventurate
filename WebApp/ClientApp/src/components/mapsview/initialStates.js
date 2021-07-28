@@ -9,6 +9,7 @@
         idEmpresaseleccionada: 0,
         verInforEmpresa: false,
         verMenuBusqueda: false,
+        verInicioFacebook: false,
         map: null,
         layerSeleccionado: null,
         centerInitial: { lat: 2.921089, lon: -75.277286 },

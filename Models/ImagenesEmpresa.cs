@@ -23,7 +23,11 @@ namespace Models
         [Required(ErrorMessage = "El dato {0} es necesario")]
         [JsonProperty(PropertyName = "IdSede")]
         public int IdSede { get; set; }
-   
+
+        [Display(Name = "EsVideo")]
+        [JsonProperty(PropertyName = "EsVideo")]
+        public bool EsVideo { get; set; }
+
         [JsonIgnore]
         public virtual Sedes Sede { get; set; }
     }

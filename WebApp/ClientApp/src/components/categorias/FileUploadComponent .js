@@ -16,7 +16,7 @@ class FileUploadComponent extends Component {
 
        // 2. get the file type
         let file = event.target.files;
-        console.log(`File ${file}`);
+       
        // 3. the message for error if the file type of not matched
        let errMessage = [];
        // 4. to check the file type to match with the fileTypes array iterate 

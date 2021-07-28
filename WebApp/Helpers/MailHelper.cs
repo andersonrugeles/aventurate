@@ -17,7 +17,7 @@ namespace WebApp.Helpers
         public static async Task SendMail(string to, string subject, string body)
         {
             var message = new MailMessage();
-            message.To.Add(new MailAddress("tandori.aventura@gmail.com"));
+            message.To.Add(new MailAddress("coaventurate@gmail.com"));
             message.From = new MailAddress(to);
             message.Subject = subject;
             message.Body = body;
@@ -27,8 +27,8 @@ namespace WebApp.Helpers
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "tandori.aventura@gmail.com",
-                    Password = "Tandori01"
+                    UserName = "coaventurate@gmail.com",
+                    Password = "Tandori*02"
                 };
 
                 smtp.Credentials = credential;

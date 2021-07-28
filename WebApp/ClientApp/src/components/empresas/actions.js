@@ -37,7 +37,7 @@ function obtener_empresas() {
                 },
             error => {
                 loader.hide();
-                console.log(error);
+               
                 dispatch(alertActions.showMessage(error.toString(), true, 'Ups'));
                
             }
@@ -200,7 +200,7 @@ function editar_empresa(empresa,user, context) {
                             dispatch(alertActions.showMessage(empresaConstants.EDITAR_EMPRESA + ' : ' + response.Message, true, 'Hecho'));
                             context.props.obtener_empresas(user.IdUsuario, user.IdRole);
                             context.props.ver_editar_empresa(false);
-                            console.log(context.props);
+                           
                             context.props.empresa_seleccionada(0);
 
 

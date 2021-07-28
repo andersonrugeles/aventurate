@@ -10,6 +10,7 @@ export const mapsActions = {
     seleccionar_empresa,
     ver_info_empresa,
     ver_menu_busqueda,
+    ver_incio_facebook,
     guardar_mapa,
     guardar_layer_seleccionado,
     guardar_posicion_central,
@@ -48,9 +49,9 @@ export const mapsActions = {
 
 
 function obtener_sede(IdSede,context) {
-    return dispatch => {
+    return async dispatch => {
 
-        ServicesHelper.obtener_sede(IdSede)
+       await  ServicesHelper.obtener_sede(IdSede)
             .then(
                 response => {
                     loader.hide();
@@ -134,6 +135,16 @@ function ver_menu_busqueda(verMenuBusqueda) {
     }
 
 }
+
+function ver_incio_facebook(verInicioFacebook) {
+    return {
+        type: mapsConstants.VER_INICIO_FACE,
+        verInicioFacebook
+    }
+
+}
+
+
 
 
 

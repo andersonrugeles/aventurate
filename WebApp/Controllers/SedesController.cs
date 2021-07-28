@@ -313,11 +313,12 @@ namespace WebApp.Controllers
 
         }
 
-        private void InsertarImagenes(Dictionary<string, string> form, int idSede)
+        private void InsertarImagenes(Dictionary<string, string> form, int idSede,bool esSede)
         {
             if (form["URLImagen1"] != "" && form["URLImagen1"] != "null")
             {
                 db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen1"] });
+
             }
 
             if (form["URLImagen2"] != "" && form["URLImagen2"] != "null")
@@ -339,7 +340,24 @@ namespace WebApp.Controllers
             {
                 db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen5"] });
             }
+            if (form["URLImagen6"] != "" && form["URLImagen6"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen6"] });
+            }
 
+            if (form["URLImagen7"] != "" && form["URLImagen7"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen7"] });
+            }
+
+            if (form["URLImagen8"] != "" && form["URLImagen8"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen8"] });
+            }
+            if (form["URLImagen9"] != "" && form["URLImagen9"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen9"] });
+            }
         }
 
         private VistaSede ToVistaSede(Sedes sede)

@@ -44,8 +44,8 @@ const rootReduc = combineReducers({
 const store = createStore(
     rootReduc,
     applyMiddleware(
-        thunkMiddleware,
-        loggerMiddleware
+        thunkMiddleware
+        
     ));
 
 

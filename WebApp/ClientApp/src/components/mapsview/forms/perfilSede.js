@@ -9,6 +9,11 @@ import { Icon } from '@material-ui/core';
 import Header from '../../header';
 import Footer from '../../footer';
 import translate from "../../helpers/translate";
+import { FacebookProvider, Comments, ShareButton, Like } from 'react-facebook';
+import Parser from 'html-react-parser';
+import ImageGallery from 'react-image-gallery';
+import {FacebookShareButton, FacebookIcon, WhatsappShareButton,FacebookMessengerShareButton,FacebookMessengerIcon, WhatsappIcon   
+} from "react-share";
 
 class PerfilSede extends Component {
 
@@ -50,9 +55,13 @@ class PerfilSede extends Component {
                 NombreTwitter: '',
                 Pagina: ''
             },
-            lblDescripcion:""
+            lblDescripcion: "",
+            showVideo: {},
+            images_gallery: [],
+            url: "https://www.w3schools.com/html/"
 
         }
+       
 
 
     }
@@ -61,10 +70,14 @@ class PerfilSede extends Component {
         this.props.history.goBack();
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         loader.show();
         window.scrollTo(0, 0);
-        this.props.obtener_sede(parseInt(localStorage.getItem('IdSede')), this);
+
+        let param = this.props.match.params.id;
+        const id = param.substring(param.indexOf("_") + 1, param.length) 
+       await this.props.obtener_sede(id, this);
+        this.obtener_img_gall();
     }
 
   
@@ -93,7 +106,87 @@ class PerfilSede extends Component {
 
     }
 
+    _toggleShowVideo(url) {
+        this.state.showVideo[url] = !Boolean(this.state.showVideo[url]);
+        this.setState({
+            showVideo: this.state.showVideo
+        });
+
+        if (this.state.showVideo[url]) {
+            if (this.state.showPlayButton) {
+                this.setState({ showGalleryPlayButton: false });
+            }
+
+            if (this.state.showFullscreenButton) {
+                this.setState({ showGalleryFullscreenButton: false });
+            }
+        }
+    }
+
+    _renderVideo(item) {
+        return (
+            <div>
+                {
+                    this.state.showVideo[item.embedUrl] ?
+                        <div className='video-wrapper'>
+                            <a
+                                className='close-video'
+                                onClick={this._toggleShowVideo.bind(this, item.embedUrl)}
+                            >
+                            </a>
+                            <iframe
+                                width='560'
+                                height='315'
+                                src={item.embedUrl}
+                                frameBorder='0'
+                                allowFullScreen
+                            >
+                            </iframe>
+                        </div>
+                        :
+                        <a onClick={this._toggleShowVideo.bind(this, item.embedUrl)}>
+                            <div className='play-button'></div>
+                            <img className='image-gallery-image' src={item.original} />
+                            {
+                                item.description &&
+                                <span
+                                    className='image-gallery-description'
+                                    style={{ right: '0', left: 'initial' }}
+                                >
+                                    {item.description}
+                                </span>
+                            }
+                        </a>
+                }
+            </div>
+        );
+    }
+
+    obtener_img_gall() {
+        const images = [];
+
+        this.state.sede.ImagenesEmpresa.map((item, index) => {
+
+            images.push({
+                original: item.UrlImagen,
+                thumbnail: item.UrlImagen,
+            })
+        })
+
+     
+
+
+        this.setState({ images_gallery: images });
+
+       
+
+    }
+
     render() {
+
+        
+
+      
 
         return (
             <div className="container-menu ">
@@ -185,11 +278,8 @@ class PerfilSede extends Component {
                                 </Col>
                                 <Col sm={12} md={7}>
                                   
-                                                <Row className="text-justify ">
-
-                                                    {this.state.lblDescripcion}
-                                                   
-                                      
+                                                <Row className="text-justify " >
+                                                    {Parser(this.state.sede.Descripcion)}
                                                 </Row>
                                 </Col>
 
@@ -206,14 +296,14 @@ class PerfilSede extends Component {
                                                         <Col sm={12} md={6}>
                                                             <Row className="justify-content-md-center text-social ">
                                                                 <Col sm={12} md={2} ><h4><i className="fa fa-money" aria-hidden="true" /></h4></Col>
-                                                                <Col sm={12} md={10} > {this.state.sede.Precio}</Col>
+                                                                <Col sm={12} md={10} >{Parser(this.state.sede.Precio)} </Col>
                                                             </Row>
 
                                                         </Col>
                                                         <Col sm={12} md={6}>
                                                             <Row className="justify-content-md-center text-social">
                                                                 <Col sm={12} md={2} ><h4><i className="fa fa-clock-o" aria-hidden="true" /></h4></Col>
-                                                                <Col sm={12} md={10} > {this.state.sede.Horarios}</Col>
+                                                                <Col sm={12} md={10} >{Parser(this.state.sede.Horarios)} </Col>
                                                             </Row>
 
                                                         </Col>
@@ -228,7 +318,7 @@ class PerfilSede extends Component {
                                                         <Col sm={12} md={4}>
                                                             <Row className="justify-content-md-center text-social">
                                                                     <Col sm={12} md={2} ><h4 className="no-margin-mobile"><i className="fa fa-map-marker" aria-hidden="true" /></h4></Col>
-                                                                <Col sm={12} md={10} > {this.state.sede.Direccion}</Col>
+                                                                    <Col sm={12} md={10} >{Parser(this.state.sede.Direccion)}  </Col>
                                                             </Row>
 
                                                         </Col>
@@ -329,18 +419,29 @@ class PerfilSede extends Component {
                                             <ListGroup className="list-group-flush  ">
                                                 <ListGroupItem>
                                                     <Row className="p-3 m-0">
-                                                        <p> {this.state.sede.Tips}</p>
+                                                        <p>{Parser(this.state.sede.Tips)} </p>
                                                     </Row>
                                                 </ListGroupItem>
                                             </ListGroup>
                                         </Tab>
-                                      
+
+                                        <Tab eventKey="gal" title="Galería">
+                                            <ListGroup className="list-group-flush  ">
+                                                <ListGroupItem>
+                                                    <Row className="p-3 m-0">
+                                                        <ImageGallery items={this.state.images_gallery} />
+                                                    </Row>
+                                                </ListGroupItem>
+                                            </ListGroup>
+                                        </Tab>
                                     </Tabs>
                                 </ListGroupItem>
-                   
+                               
+
                       
                     </ListGroup>
                             <Row className="p-3 m-0">
+
                                 <Col sm={12} md={6} className="mb-1">
                                     <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >Ir al mapa </button>
 
@@ -351,10 +452,55 @@ class PerfilSede extends Component {
                                   
                                 </Col>
                             </Row>
+                             <ListGroup>
+                                    <ListGroupItem >
+                                    <h5><u>Compartir</u></h5>
+
+
+                                    <div className="d-flex justify-content-center">
+                                        <div className="row  w-100">
+                                            <div className="col d-flex justify-content-center">
+                                                 <FacebookProvider appId="137904151817325">
+                                            <Like href={"http://www.facebook.com/sharer.php?u=" + window.location.href}   />
+                                        </FacebookProvider>
+                                            </div>
+                                            <div className="col d-flex justify-content-center">
+                                                <FacebookShareButton url={this.state.url} >
+                                                    <FacebookIcon size={42} round={true} />
+                                                </FacebookShareButton>
+
+                                                <WhatsappShareButton url={this.state.url} >
+                                                    <WhatsappIcon size={42} round={true} />
+                                                </WhatsappShareButton>
+
+                                                <FacebookMessengerShareButton url={this.state.url} >
+                                                    <FacebookMessengerIcon size={42} round={true} />
+                                                    </FacebookMessengerShareButton>
+                                            </div>
+                                       </div>
+                                    </div>
+                                   
+                                </ListGroupItem>
+
+                                <ListGroupItem >
+                                    <h5><u>Comentarios</u></h5>
+                                    <div className="d-flex justify-content-center">
+                                    <FacebookProvider appId="137904151817325">
+                                        
+                                        <Comments href="https://www.facebook.com/Vincent-107918274843518" />
+                                       
+                                        </FacebookProvider>
+                                    </div>
+                                </ListGroupItem>
+
+                      
+                            </ListGroup>
                            
                
             </div>
                     </div >
+
+                   
                    
                 </div>
                 <Footer />

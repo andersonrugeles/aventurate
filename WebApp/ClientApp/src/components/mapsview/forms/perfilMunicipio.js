@@ -9,6 +9,11 @@ import { mapsActions } from '../actions';
 import { Icon } from '@material-ui/core';
 import Header from '../../header';
 import Footer from '../../footer';
+import { FacebookProvider, Comments, ShareButton, Like } from 'react-facebook';
+import Parser from 'html-react-parser';
+import {
+    FacebookShareButton, FacebookIcon, WhatsappShareButton, FacebookMessengerShareButton, FacebookMessengerIcon, WhatsappIcon
+} from "react-share";
 
 class PerfilMunicipio extends Component {
 
@@ -34,7 +39,9 @@ class PerfilMunicipio extends Component {
                 Festividades: '',
                 QueHacer: '',
              
-            }
+            },
+
+            url:"https://www.w3schools.com/html/"
 
         }
 
@@ -48,7 +55,9 @@ class PerfilMunicipio extends Component {
     async componentDidMount() {
         loader.show();
         window.scrollTo(0, 0);
-        await this.props.obtener_municipio(parseInt(localStorage.getItem('IdMunicipio')));
+        let param = this.props.match.params.id;
+        const id = param.substring(param.indexOf("_") + 1, param.length)
+        await this.props.obtener_municipio(parseInt(id));
        
        
 
@@ -82,7 +91,7 @@ class PerfilMunicipio extends Component {
                                             <Col sm={12} md={8}>
                                                 <Row className="font-weight-bold d-flex justify-content-center" >
 
-                                                    <h5>Municipio de {this.state.municipio.Nombre} </h5>  
+                                                    <h5>Municipio de {Parser(this.state.municipio.Nombre)}  </h5>  
 
                                                 </Row>
 
@@ -123,14 +132,15 @@ class PerfilMunicipio extends Component {
                                         <Row className=" m-0 ">
                                             <Col sm={12} md={12}>
                                                 <Row className="text-justify ">
-                                                    {this.state.municipio.Descripcion}
+                                                    {Parser(this.state.municipio.Descripcion)}
+                                                 
                                                 </Row>
                                              </Col>
 
                                         </Row>
                                         <Row className=" m-2 " >
 
-                                            <h5 className="mr-1"><u> Clima: </u></h5>   {this.state.municipio.Clima}
+                                            <h5 className="mr-1"><u> Clima: </u></h5>   {Parser(this.state.municipio.Clima)}
                                         </Row>
 
                                     </ListGroupItem>
@@ -141,7 +151,7 @@ class PerfilMunicipio extends Component {
                                                 <ListGroup className="list-group-flush  ">
                                                     <ListGroupItem>
                                                         <Row className="p-3 m-0 justify-content-center">
-                                                            <p> {this.state.municipio.QueHacer}</p>
+                                                            <p>{Parser(this.state.municipio.QueHacer)} </p>
                                                         </Row>
                                                     </ListGroupItem>
                                                 </ListGroup>
@@ -150,7 +160,7 @@ class PerfilMunicipio extends Component {
                                                 <ListGroup className="list-group-flush  ">
                                                     <ListGroupItem>
                                                         <Row className="p-3 m-0 justify-content-center">
-                                                            <p> {this.state.municipio.Tips}</p>
+                                                            <p>{Parser(this.state.municipio.Tips)} </p>
                                                         </Row>
                                                     </ListGroupItem>
                                                 </ListGroup>
@@ -159,7 +169,7 @@ class PerfilMunicipio extends Component {
                                                 <ListGroup className="list-group-flush  ">
                                                     <ListGroupItem>
                                                         <Row className="p-3 m-0 justify-content-center">
-                                                            <p> {this.state.municipio.Festividades}</p>
+                                                            <p>{Parser(this.state.municipio.Festividades)} </p>
                                                         </Row>
                                                     </ListGroupItem>
                                                 </ListGroup>
@@ -180,8 +190,59 @@ class PerfilMunicipio extends Component {
 
                                             </Col>
                                         </Row>
+
+                                    </ListGroupItem>
+
+
+                                    <ListGroupItem>
+
+                                        <ListGroup>
+                                        <ListGroupItem >
+                                            <h5><u>Compartir</u></h5>
+
+
+                                            <div className="d-flex justify-content-center">
+                                                <div className="row  w-100">
+                                                    <div className="col d-flex justify-content-center">
+                                                        <FacebookProvider appId="137904151817325">
+                                                            <Like href={"http://www.facebook.com/sharer.php?u=" + window.location.href} />
+                                                        </FacebookProvider>
+                                                    </div>
+                                                        <div className="col d-flex justify-content-center">
+                                                            <FacebookShareButton url={this.state.url} >
+                                                            <FacebookIcon size={42} round={true} />
+                                                        </FacebookShareButton>
+
+                                                            <WhatsappShareButton url={this.state.url} >
+                                                            <WhatsappIcon size={42} round={true} />
+                                                        </WhatsappShareButton>
+
+                                                            <FacebookMessengerShareButton url={this.state.url} >
+                                                            <FacebookMessengerIcon size={42} round={true} />
+                                                        </FacebookMessengerShareButton>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </ListGroupItem>
+
+                                        <ListGroupItem >
+                                            <h5><u>Comentarios</u></h5>
+                                            <div className="d-flex justify-content-center">
+                                                <FacebookProvider appId="137904151817325">
+
+                                                    <Comments href="https://www.facebook.com/Vincent-107918274843518" />
+
+                                                </FacebookProvider>
+                                            </div>
+                                        </ListGroupItem>
+
+
+                                        </ListGroup>
+
                                     </ListGroupItem>
                                 </ListGroup>
+
                     
                                
                     : ""

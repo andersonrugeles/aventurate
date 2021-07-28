@@ -10,6 +10,8 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { mapsActions } from '../mapsview/actions';
 import L, { map } from 'leaflet';
 
+
+
 class MenuFiltro extends Component {
 
     rangeElement = React.createRef();
@@ -33,6 +35,8 @@ class MenuFiltro extends Component {
         this.AbrirFiltroFlotante = this.AbrirFiltroFlotante.bind(this);
         this.FiltroGeneral = this.FiltroGeneral.bind(this);
         this.LimpiarFiltros = this.LimpiarFiltros.bind(this);
+        this.VerInicioFacebook = this.VerInicioFacebook.bind(this);
+
         
     }
 
@@ -70,6 +74,7 @@ class MenuFiltro extends Component {
         this.props.seleccionar_categoria(idCategoria);
     }
 
+  
     FiltroGeneral(e) {
         loader.show();
         this.props.seleccionar_municipio(0);
@@ -96,10 +101,18 @@ class MenuFiltro extends Component {
         await this.props.obtener_sedes(arreglo, 0, this);
     }
 
+    async VerInicioFacebook() {
+        this.props.ver_incio_facebook(true)
+    }
+
 
     render() {
      
         const { categorias, itemActiveClass, verFiltroFlotante } = this.props;
+
+    
+
+
         return (
 
            
@@ -134,7 +147,7 @@ class MenuFiltro extends Component {
                         }
                     >
 
-                            <a href="#"  >
+                            <a href="#" onClick={this.FiltroGeneral} >
                                 <img alt="restar filter" src={`/app-images/categorias/restart_filter.png`} />
                             </a>
                            
@@ -166,6 +179,23 @@ class MenuFiltro extends Component {
                        
 
                     </li>
+                    <li onClick={this.VerInicioFacebook}>
+                        <OverlayTrigger
+                            placement="bottom"
+                            overlay={
+                                <Tooltip>
+                                   Iniciar Sesión
+                            </Tooltip>
+                            }
+                        >
+
+                            <a href="#"  >
+                                <i className="fa fa-user text-white" aria-hidden="true"></i>
+                            </a>
+
+                        </OverlayTrigger>
+
+                    </li>
                    
                 </ul>
 
@@ -189,7 +219,10 @@ class MenuFiltro extends Component {
 //-------------------------------Redux------------------------
 
 const mapStateToProps = (state) => {
-    const { layerSeleccionado, centerInitial, map, user_location, municipio} = state.mapsReducer;
+    const { layerSeleccionado, centerInitial, map, user_location, municipio, verInicioFacebook } = state.mapsReducer;
+
+
+
   
     const { categorias, itemActiveClass, verFiltroFlotante, itemsFiltroSeleccionado } = state.menuFiltroReducer;
 
@@ -203,7 +236,8 @@ const mapStateToProps = (state) => {
         layerSeleccionado,
         centerInitial,
         user_location,
-        municipio
+        municipio,
+        verInicioFacebook
     };
 
 };
@@ -220,6 +254,7 @@ const mapDispatchToProps = {
     seleccionar_categoria: menuFiltroActions.seleccionar_categoria,
     agregar_items_filtro: menuFiltroActions.agregar_items_filtro,
     obtener_municipio: mapsActions.obtener_municipio,
+    ver_incio_facebook: mapsActions.ver_incio_facebook,
     
   
 };

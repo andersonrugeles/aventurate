@@ -54,7 +54,7 @@ class CrearMunicipio extends Component {
     AsignarUbicacion(e) {
         const { municipio } = this.state;
 
-        console.log(e.latlng);
+      
         var lat = e.latlng.lat;
         var lon = e.latlng.lng;
 

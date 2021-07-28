@@ -88,6 +88,8 @@ namespace Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("EsVideo");
+
                     b.Property<int>("IdSede");
 
                     b.Property<string>("UrlImagen")

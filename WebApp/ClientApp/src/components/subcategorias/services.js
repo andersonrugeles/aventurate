@@ -153,7 +153,7 @@ async function crear_categoria_subcategoria(params) {
         body: JSON.stringify(params) 
     };
 
-    console.log(JSON.stringify(params));
+
 
     return await fetch(`api/SubCategorias/CrearCategoriaSubcategoria`, requestOptions)
         .then(handleResponse)

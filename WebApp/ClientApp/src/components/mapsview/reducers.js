@@ -46,6 +46,15 @@ export function mapsReducer(state = initialState.maps_states, action) {
 
         }
 
+        case mapsConstants.VER_INICIO_FACE: {
+            return {
+                ...state, verInicioFacebook: action.verInicioFacebook
+            }
+
+        }
+
+            
+
         case mapsConstants.GUARDAR_MAPA: {
             return {
                 ...state, map: action.map

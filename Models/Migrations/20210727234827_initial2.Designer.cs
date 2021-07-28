@@ -10,8 +10,8 @@ using Models;
 namespace Models.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20201119004310_initial1")]
-    partial class initial1
+    [Migration("20210727234827_initial2")]
+    partial class initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,6 +89,8 @@ namespace Models.Migrations
                     b.Property<int>("IdImagenEmpresa")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("EsVideo");
 
                     b.Property<int>("IdSede");
 

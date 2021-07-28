@@ -8,7 +8,7 @@ import { alertActions } from '../../alert_message/actions';
 import { Modal, Form, Col } from 'react-bootstrap';
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 import { ComboBoxComponent } from '@syncfusion/ej2-react-dropdowns';
-
+import { CheckBoxComponent } from '@syncfusion/ej2-react-buttons';
 
 class CrearUsuario extends Component {
 
@@ -186,8 +186,9 @@ class CrearUsuario extends Component {
                                 <ComboBoxComponent name="Genero" showClearButton={false} allowCustom={false} value={usuario.Genero} change={(val) => { this.InputChange({ target: { name: 'Genero', value: val.value } }) }} allowFiltering={true} placeholder="Genero" className="pz-input" dataSource={this.genderData.items} />
                             </Form.Group>
                             <Form.Group as={Col} >
-                                <Form.Control type="number" name="Telefono" onChange={this.InputChange} value={usuario.Telefono} onInput={(e) => { e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10) }}
-                                    onKeyDown={e => /[\+\-\.\,]$/.test(e.key) && e.preventDefault()} className="pz-input" placeholder="Telefono" />
+                               
+                                    <CheckBoxComponent label='Activo' checked={this.state.usuario.Activo} change={(val) => { this.InputChange({ target: { name: 'Activo', value: val.checked } }); }} />
+                              
                             </Form.Group>
                         </Form.Row>
                         <Form.Row sm={10}>

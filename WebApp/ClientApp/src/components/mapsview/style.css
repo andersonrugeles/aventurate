@@ -64,8 +64,12 @@ a{
     display: none;
 }
 
-.text-social{
-    text-align:left!important;
+.image-gallery{
+    width:100%;
+}
+
+.text-social {
+    text-align: left !important;
 }
 
 @media (max-width: 720px) {

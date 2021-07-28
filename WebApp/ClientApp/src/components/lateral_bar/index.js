@@ -58,7 +58,7 @@ class LateralMenu extends Component {
         e.stopPropagation();
         e.preventDefault();
 
-        console.log(e.target);
+       
 
         if (this.state.idItemActive !== '') {
 

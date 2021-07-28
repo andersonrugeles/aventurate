@@ -12,7 +12,7 @@ import L, { map } from 'leaflet';
 import { icons } from '../../helpers/mapIcons';
 import { categoriaActions } from '../../categorias/actions';
 import { subcategoriaActions } from '../../subcategorias/actions';
-
+import { CheckBoxComponent } from '@syncfusion/ej2-react-buttons';
 
 
 class CrearSede extends Component {
@@ -39,6 +39,10 @@ class CrearSede extends Component {
                 URLImagen3: '',
                 URLImagen4: '',
                 URLImagen5: '',
+                URLImagen6: '',
+                URLImagen7: '',
+                URLImagen8: '',
+                URLImagen9: '',
                 IdEmpresa: this.props.IdEmpresa,
                 Anexo: '',
                 Precio: '',
@@ -50,7 +54,8 @@ class CrearSede extends Component {
                 Tips: '',
                 NombreTwitter: '',
                 TwitterUrl: '',
-                Pagina: ''
+                Pagina: '',
+                EsVideo:false
 
             },
             file: null
@@ -191,13 +196,18 @@ class CrearSede extends Component {
         file.append('URLImagen1', sede.URLImagen1);
         file.append('URLImagen2', sede.URLImagen2);
         file.append('URLImagen3', sede.URLImagen3);
-        file.append('IdMunicipio', sede.IdMunicipio);
+        file.append('URLImagen4', sede.URLImagen4);
+        file.append('URLImagen5', sede.URLImagen5);
+        file.append('URLImagen6', sede.URLImagen6);
+        file.append('URLImagen7', sede.URLImagen7);
+        file.append('URLImagen8', sede.URLImagen8);
+        file.append('URLImagen9', sede.URLImagen9);
+        file.append('EsVideo', sede.EsVideo);
+        file.append('IdTipoSede', sede.IdTipoSede);
         file.append('IdTipoSede', sede.IdTipoSede);
         file.append('IdEmpresa', sede.IdEmpresa);
         file.append('Descripcion', sede.Descripcion);
         file.append('Anexo', sede.Anexo);
-        file.append('URLImagen4', sede.URLImagen4);
-        file.append('URLImagen5', sede.URLImagen5);
         file.append('Precio', sede.Precio);
         file.append('InstagramUrl', sede.InstagramUrl);
         file.append('NombreInstagram', sede.NombreInstagram);
@@ -303,7 +313,16 @@ class CrearSede extends Component {
                             <Form.Control type="text" maxLength={100} name="Longitud" value={sede.Longitud} onChange={this.InputChange} className="pz-input" placeholder="Longitud" />
                         </Form.Group>
                         <Form.Group md="6" >
-                            <Form.Control type="text"  name="URLImagen1" value={sede.URLImagen1} onChange={this.InputChange} className="pz-input" placeholder="URLImagen1" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen1" value={sede.URLImagen1} onChange={this.InputChange} className="pz-input" placeholder="URLImagen1" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo} change={(val) => { this.InputChange({ target: { name: 'EsVideo', value: val.checked } }); }} />
+                            </Form.Group>
+
+                           
+
+
                         </Form.Group>
                         <Form.Group md="6" >
                             <Form.Control type="text"  name="URLImagen2" value={sede.URLImagen2} onChange={this.InputChange} className="pz-input" placeholder="URLImagen2" />
@@ -317,7 +336,18 @@ class CrearSede extends Component {
                         <Form.Group md="6" >
                             <Form.Control type="text"  name="URLImagen5" value={sede.URLImagen5} onChange={this.InputChange} className="pz-input" placeholder="URLImagen5" />
                         </Form.Group>
-                    
+                        <Form.Group md="6" >
+                            <Form.Control type="text" name="URLImagen6" value={sede.URLImagen6} onChange={this.InputChange} className="pz-input" placeholder="URLImagen6" />
+                        </Form.Group>
+                        <Form.Group md="6" >
+                            <Form.Control type="text" name="URLImagen7" value={sede.URLImagen7} onChange={this.InputChange} className="pz-input" placeholder="URLImagen7" />
+                        </Form.Group>
+                        <Form.Group md="6" >
+                            <Form.Control type="text" name="URLImagen8" value={sede.URLImagen8} onChange={this.InputChange} className="pz-input" placeholder="URLImagen8" />
+                        </Form.Group>
+                        <Form.Group md="6" >
+                            <Form.Control type="text" name="URLImagen9" value={sede.URLImagen9} onChange={this.InputChange} className="pz-input" placeholder="URLImagen9" />
+                        </Form.Group>
                         <Form.Group md="6" >
                             <Form.Control type="text"  name="NombreTwitter" value={sede.NombreTwitter} onChange={this.InputChange} className="pz-input" placeholder="NombreTwitter" />
                         </Form.Group>

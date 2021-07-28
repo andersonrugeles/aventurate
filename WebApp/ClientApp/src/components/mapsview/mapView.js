@@ -20,6 +20,8 @@ import Footer from '../footer/index';
 import { HeaderActions } from '../header/actions';
 import { Link } from "react-router-dom";
 
+import Facebook from '../pagina/forms/inicio_face';
+
 class MapView extends Component {
 
     geojson = React.createRef();
@@ -62,14 +64,17 @@ class MapView extends Component {
 
     verPerfilSede(sede) {
         localStorage.setItem('IdSede', sede.IdSede);
-        this.props.history.push('/sitio');
+        let nombre = sede.Nombre.replace(/ /g, "")
+        this.props.history.push('/sitio/' + nombre.trim() + "_" + sede.IdSede)
+
     }
 
 
     verPerfilMunicipio(municipio) {
-        console.log(municipio);
         localStorage.setItem('IdMunicipio', municipio.IdMunicipio);
-        this.props.history.push('/municipio');
+
+        let nombre = municipio.Nombre.replace(/ /g, "")
+        this.props.history.push('/municipio/' + nombre.trim() + "_" + municipio.IdMunicipio)
     }
 
     componentDidMount() {
@@ -366,7 +371,7 @@ class MapView extends Component {
                             <ListGroup className="list-group-flush  ">
                                 <ListGroupItem className="list-group-flush mb-3 ">
                                    
-                                    <p className="text-justify "> <h6>El mapa tiene un filtro en el cual vas a poder seleccionar lo que estés buscando (hoteles, restaurantes, zonas de camping, rutas, museos, actividades a realizar…), y dependiendo a lo seleccionado se marcaran los puntos en el mapa, donde te indicara que en ese lugar puedes encontrar lo que estás buscando, solo tienes que darle clic al municipio que desees ir, o puedes darle directamente al punto que el mapa te indique. Y de esa forma podrás entrar y consultar la información que necesites para que vivas la mejor experiencia.</h6></p>
+                                    <h6 className="text-justify "> El mapa tiene un filtro en el cual vas a poder seleccionar lo que estés buscando (hoteles, restaurantes, zonas de camping, rutas, museos, actividades a realizar…), y dependiendo a lo seleccionado se marcaran los puntos en el mapa, donde te indicara que en ese lugar puedes encontrar lo que estás buscando, solo tienes que darle clic al municipio que desees ir, o puedes darle directamente al punto que el mapa te indique. Y de esa forma podrás entrar y consultar la información que necesites para que vivas la mejor experiencia.</h6>
 
 
                                 </ListGroupItem>
@@ -466,6 +471,7 @@ class MapView extends Component {
 
 
                 </div>
+                <Facebook show={this.props.verInicioFacebook} />
                 <Footer />
             </div>
         )
@@ -479,6 +485,7 @@ function mapStateToProps(state) {
     const { user_location, user_address, sedes,
         verInforEmpresa,
         verMenuBusqueda,
+        verInicioFacebook,
         map,
         layerSeleccionado,
         municipio,
@@ -500,7 +507,8 @@ function mapStateToProps(state) {
         layerSeleccionado,
         municipio,
         centerInitial,
-        nombreMunicipioSeleccionado
+        nombreMunicipioSeleccionado,
+        verInicioFacebook
     };
 };
 

@@ -35,7 +35,7 @@ class InfoEmpresa extends Component {
 
     buscarInfo() {
         var e = this.props.empresas.filter(e => e.idEmpresa === this.props.idEmpresaseleccionada);
-        console.log(e[0]);
+        
 
         this.setState({
             info:e[0]
