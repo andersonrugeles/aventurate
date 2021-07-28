@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { HeaderActions } from '../header/actions';
 import { withRouter } from "react-router-dom";
 import ImageZoom from './forms/imagen_zoom';
-
+import translate from "../helpers/translate";
 
 
 class Galeria extends Component {
@@ -16,12 +16,14 @@ class Galeria extends Component {
         super(props);
         this.state = {
             show: false,
-            urlImage:''
+            urlImage: '',
+            lblSiguenos: '',
+            btnIrMapa: ''
         };
 
         this.zoom = this.zoom.bind(this);
         this.close = this.close.bind(this);
-        
+        this.traducir = this.traducir.bind(this); 
 
 
 
@@ -47,8 +49,23 @@ class Galeria extends Component {
     componentDidMount() {
         loader.hide();
         window.scrollTo(0, 0);
+        this.traducir();
     }
-
+    async traducir() {
+        loader.show();
+        if (localStorage.getItem('lenguaje') === 'español') {
+            this.setState({
+                lblSiguenos: await translate('Siguenos en nuestras redes', { to: "es", engine: "libre" }),
+                btnIrMapa: await translate('Ir al mapa', { to: "es", engine: "libre" })
+            });
+        } else if (localStorage.getItem('lenguaje') === 'ingles') {
+            this.setState({
+                lblSiguenos: await translate('Siguenos en nuestras redes', { to: "en", engine: "libre" }),
+                btnIrMapa: await translate('Ir al mapa', { to: "en", engine: "libre" })
+            });
+        }
+        loader.hide();
+    }
   
     volver() {
         this.props.history.push("/");
@@ -114,7 +131,7 @@ class Galeria extends Component {
                                                 </Col>
                                                 <Col sm={12} md={4} className="justify-content-center ">
                                                     <ListGroup variant="flush">
-                                                        <ListGroup.Item><h5><u> Siguenos en nuestras redes</u></h5></ListGroup.Item>
+                                                        <ListGroup.Item><h5><u> {this.state.lblSiguenos === "" ? "Siguenos en nuestras redes" : this.state.lblSiguenos}</u></h5></ListGroup.Item>
                                                         <ListGroup.Item>
                                                             <Row className="justify-content-md-center ">
                                                                 <Col sm={12} md={2} ><h4><i className="fa fa-facebook" aria-hidden="true" /></h4></Col>
@@ -143,7 +160,7 @@ class Galeria extends Component {
                                                         </ListGroup.Item>
                                                         <ListGroup.Item>
                                                             <Row className="justify-content-md-center ">
-                                                                <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >Ir al mapa </button>
+                                                                <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} > {this.state.btnIrMapa === "" ? "Ir al Mapa" : this.state.btnIrMapa}</button>
                                                             </Row>
                                                         </ListGroup.Item>
                                                     </ListGroup>

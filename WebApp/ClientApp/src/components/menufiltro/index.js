@@ -9,6 +9,7 @@ import SubCategoriasFiltro from './form/filtroSubCategorias';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { mapsActions } from '../mapsview/actions';
 import L, { map } from 'leaflet';
+import translate from "../helpers/translate";
 
 
 
@@ -35,6 +36,13 @@ class MenuFiltro extends Component {
         this.AbrirFiltroFlotante = this.AbrirFiltroFlotante.bind(this);
         this.FiltroGeneral = this.FiltroGeneral.bind(this);
         this.LimpiarFiltros = this.LimpiarFiltros.bind(this);
+        this.state = {
+            lblRestablecer: '',
+            lblEliminar: '',
+            lblPrincipal:''
+        };
+
+        this.traducir = this.traducir.bind(this);
         this.VerInicioFacebook = this.VerInicioFacebook.bind(this);
 
         
@@ -43,7 +51,25 @@ class MenuFiltro extends Component {
     componentDidMount() {
         loader.show();
         this.props.obtener_categorias();
-       
+        this.traducir();
+    }
+    async traducir() {
+        loader.show();
+        if (localStorage.getItem('lenguaje') === 'español') {
+            this.setState({
+                lblRestablecer: await translate('Restablecer', { to: "es", engine: "libre" }),
+                lblEliminar: await translate('Eliminar Filtros', { to: "es", engine: "libre" }),
+                lblPrincipal: await translate('Principal', { to: "es", engine: "libre" })
+            });
+        } else if (localStorage.getItem('lenguaje') === 'ingles') {
+            this.setState({
+                lblRestablecer: await translate('Restablecer', { to: "en", engine: "libre" }),
+                lblEliminar: await translate('Eliminar Filtros', { to: "en", engine: "libre" }),
+                lblPrincipal: await translate('Principal', { to: "en", engine: "libre" })
+
+            });
+        }
+        loader.hide();
     }
 
     AbrirFiltroFlotante(e) {
@@ -121,7 +147,7 @@ class MenuFiltro extends Component {
                 <ul className="icon-bar list-inline mx-auto justify-content-center">
                     {
                         categorias.map(({ IdCategoria, Nombre, UrlImagen }, i) => (
-                            <li id={`item-f-${IdCategoria}`} title={Nombre} key={i} onClick={this.AbrirFiltroFlotante} className={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoria === IdCategoria) ? 'itemFilterActiveSub' : ''} >
+                            <li id={`item-f-${IdCategoria}`} title='hola' key={i} onClick={this.AbrirFiltroFlotante} className={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoria === IdCategoria) ? 'itemFilterActiveSub' : ''} >
                                 <OverlayTrigger
                                     placement="bottom"
                                     overlay={
@@ -142,7 +168,7 @@ class MenuFiltro extends Component {
                         placement="bottom"
                         overlay={
                             <Tooltip>
-                                Restablecer
+                                {this.state.lblRestablecer === "" ? "Restablecer" : this.state.lblRestablecer}
                             </Tooltip>
                         }
                     >
@@ -159,7 +185,7 @@ class MenuFiltro extends Component {
                             placement="bottom"
                             overlay={
                                 <Tooltip>
-                                    Eliminar filtros
+                                    {this.state.lblEliminar === "" ? "Eliminar Filtros" : this.state.lblEliminar}
                             </Tooltip>
                             }
                         >

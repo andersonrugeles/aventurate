@@ -50,30 +50,39 @@ class Header extends Component {
        
         
     }
-    TranslateSpanish() {
-        localStorage.setItem('lenguaje', 'español');
-        this.traducir();
+
+    async componentDidMount() {
+        await this.traducir();
     }
-    TranslateEnglish() {
-        localStorage.setItem('lenguaje', 'ingles');
-        this.traducir();
+    async TranslateSpanish() {
+        await localStorage.setItem('lenguaje', 'español');
+        window.location.reload(true);
+    }
+    async TranslateEnglish() {
+        await localStorage.setItem('lenguaje', 'ingles');
+        window.location.reload(true);
     }
 
     async traducir() {
         if (localStorage.getItem('lenguaje') === 'español') {
             this.setState({
-                lblContacto: await translate('Contacto', { to: "es", engine: "libre" })
+                lblBlog: await translate('Blog', { to: "es", engine: "libre" }),
+                lblContacto: await translate('Contacto', { to: "es", engine: "libre" }),
+                lblFotos: await translate('Fotos', { to: "es", engine: "libre" }),
+                lblInicio: await translate('Inicio', { to: "es", engine: "libre" }),
+                lblSomos: await translate('Quienes Somos', { to: "es", engine: "libre" })
             });
 
 
         } else if (localStorage.getItem('lenguaje') === 'ingles') {
             this.setState({
-                lblContacto: await translate('Hola', { to: "en", engine: "libre" })
+                lblBlog: await translate('Blog', { to: "en", engine: "libre" }),
+                lblContacto: await translate('Contacto', { to: "en", engine: "libre" }),
+                lblFotos: await translate('Fotos', { to: "en", engine: "libre" }),
+                lblInicio: await translate('Inicio', { to: "en", engine: "libre" }),
+                lblSomos: await translate('Quiénes somos', { to: "en", engine: "libre" })
             });
         }
- 
-
-
     }
     
     MostrarMenu(e) {
@@ -159,8 +168,8 @@ class Header extends Component {
                                     </a>
                                     <div onClick={this.ItemClick} id='blog'  >
                                         <Link to="/blog" id='blog' className={this.props.id_item_menu === "blog" ? "active" : ""} >
-                                            <Row>
-                                                <Col xs={12} md={12} className="text-center" id='blog'>Blog</Col>
+                                        <Row>
+                                            <Col xs={12} md={12} className="text-center" id='blog'>{this.state.lblBlog === "" ? "Blog" : this.state.lblBlog}</Col>
                                             </Row>
                                         </Link>
                                     </div>
@@ -168,8 +177,8 @@ class Header extends Component {
 
                                     <div onClick={this.ItemClick} id='fotos' >
                                         <Link to="/galeria" id='fotos' className={this.props.id_item_menu === "fotos" ? "active" : ""}  >
-                                            <Row>
-                                                <Col xs={12} md={12} className="text-center" id='fotos'>Fotos</Col>
+                                        <Row>
+                                            <Col xs={12} md={12} className="text-center" id='fotos'>{this.state.lblFotos === "" ? "Fotos" : this.state.lblFotos}</Col>
                                             </Row>
                                         </Link>
                                     </div>
@@ -178,8 +187,8 @@ class Header extends Component {
 
                                     <div onClick={this.ItemClick} id='inicio'  >
                                         <Link to="/" id='inicio' className={this.props.id_item_menu === "inicio" ? "active" : ""} >
-                                            <Row>
-                                                <Col xs={12} md={12} className="text-center" id='inicio'>Inicio</Col>
+                                        <Row>
+                                            <Col xs={12} md={12} className="text-center" id='inicio'>{this.state.lblInicio === "" ? "Inicio" : this.state.lblInicio}</Col>
                                             </Row>
                                         </Link>
                                     </div>
@@ -188,16 +197,16 @@ class Header extends Component {
 
                                     <div onClick={this.ItemClick} id='quienes'  >
                                         <Link to="/quienes_somos" id='quienes' className={this.props.id_item_menu === "quienes" ? "active" : ""} >
-                                            <Row>
-                                                <Col xs={12} md={12} className="text-center" id='quienes'>Quienes Somos</Col>
+                                        <Row>
+                                            <Col xs={12} md={12} className="text-center" id='quienes'>{this.state.lblSomos === "" ? "Quiénes somos" : this.state.lblSomos}</Col>
                                             </Row>
                                         </Link>
                                     </div>
 
                                     <div onClick={this.ItemClick} id='contacto'>
                                         <Link to="/contacto" id='contacto' className={this.props.id_item_menu === "contacto" ? "active" : ""}  >
-                                            <Row>
-                                                <Col xs={12} md={12} className="text-center" id='contacto'>Contacto</Col>
+                                        <Row>
+                                            <Col xs={12} md={12} className="text-center" id='contacto'>{this.state.lblContacto === "" ? "Contacto" : this.state.lblContacto}</Col>
                                             </Row>
                                         </Link>
                                 </div>

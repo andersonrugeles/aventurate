@@ -53,7 +53,14 @@ class PerfilSede extends Component {
                 SubCategoria: null,
                 TwitterUrl: '',
                 NombreTwitter: '',
-                Pagina: ''
+                Pagina: '',
+                btnIrMapa: '',
+                lblInformacion: '',
+                lblDetalle: '',
+                lblContacto: '',
+                btnLlegar: '',
+                lblTips: '',
+                sedeTips:''
             },
             lblDescripcion: "",
             showVideo: {},
@@ -78,28 +85,34 @@ class PerfilSede extends Component {
         const id = param.substring(param.indexOf("_") + 1, param.length) 
        await this.props.obtener_sede(id, this);
         this.obtener_img_gall();
+        this.props.obtener_sede(parseInt(localStorage.getItem('IdSede')), this);
+        this.traducir();
     }
 
   
 
 
     async traducir() {
-        var ln = navigator.language || navigator.userLanguage;
-
-        let lblDescripcion = "", pass = "";
-
-        if (ln == 'en') {
-            lblDescripcion = await translate(this.state.sede.Descripcion, { to: "en", engine: "libre" });
-           
-        } else if (ln == 'es-ES') {
-            lblDescripcion = await translate(this.state.sede.Descripcion, { to: "en", engine: "libre" });
-        }
-
-
-        if (this.state.lblCodigo === "") {
-
+        loader.show();
+        if (localStorage.getItem('lenguaje') === 'español') {
             this.setState({
-                lblDescripcion
+                btnIrMapa: await translate('Ir al mapa', { to: "es", engine: "libre" }),
+                lblInformacion: await translate('Informacion', { to: "es", engine: "libre" }),
+                lblDetalle: await translate('Detalles', { to: "es", engine: "libre" }),
+                lblContacto: await translate('Datos de contacto', { to: "es", engine: "libre" }),
+                btnLlegar: await translate('Como llegar', { to: "es", engine: "libre" }),
+                lblTips: await translate('Tips y recomendaciones', { to: "es", engine: "libre" }),
+                sedeTips: await translate(this.state.sede.Tips, { to: "es", engine: "libre" })
+            });
+        } else if (localStorage.getItem('lenguaje') === 'ingles') {
+            this.setState({
+                btnIrMapa: await translate('Ir al mapa', { to: "en", engine: "libre" }),
+                lblInformacion: await translate('Informacion', { to: "en", engine: "libre" }),
+                lblDetalle: await translate('Detalles', { to: "en", engine: "libre" }),
+                lblContacto: await translate('Datos de contacto', { to: "en", engine: "libre" }),
+                btnLlegar: await translate('Como llegar', { to: "en", engine: "libre" }),
+                lblTips: await translate('Tips y recomendaciones', { to: "en", engine: "libre" }),
+                sedeTips: await translate(this.state.sede.Tips, { to: "en", engine: "libre" })
             });
         }
 
@@ -240,7 +253,7 @@ class PerfilSede extends Component {
                                             </Col>
                                             <Col sm={12} md={2}>
                                                 <Row className="font-weight-bold" >
-                                                   <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >Ir al mapa </button>
+                                                    <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{this.state.btnIrMapa === "" ? "Ir al mapa" : this.state.btnIrMapa}</button>
                                                 </Row>
 
                                             </Col>
@@ -288,8 +301,8 @@ class PerfilSede extends Component {
                                 </ListGroupItem>    
                                 <ListGroupItem>
                                     <Tabs defaultActiveKey="info" variant="pills" transition={false} id="noanim-tab-example">
-                                        <Tab eventKey="info" title="Información"  className="p-3">
-                                            <h5><u> Detalles</u></h5>
+                                        <Tab eventKey="info" title={this.state.lblInformacion === "" ? "Informacion" : this.state.lblInformacion} className="p-3">
+                                            <h5><u> {this.state.lblDetalle === "" ? "Detalles" : this.state.lblDetalle}</u></h5>
                                                 <ListGroup className="list-group-flush  ">
                                                     <ListGroupItem>
                                                     <Row className="p-1 m-0">
@@ -309,8 +322,8 @@ class PerfilSede extends Component {
                                                         </Col>
                                                     </Row>
                                                     </ListGroupItem>
-                                                </ListGroup>
-                                            <h5><u>Datos de contacto</u></h5>
+                                            </ListGroup>
+                                            <h5><u>{this.state.lblContacto === "" ? "Datos de contacto" : this.state.lblContacto}</u></h5>
                                             <ListGroup className="list-group-flush  ">
                                                 <ListGroupItem>
                                                     {this.state.sede.Direccion !== "" ?
@@ -415,10 +428,11 @@ class PerfilSede extends Component {
                                                 </ListGroupItem>
                                             </ListGroup>
                                         </Tab>
-                                        <Tab eventKey="recom" title="Tips y recomendaciones">
+                                        <Tab eventKey="recom" title={this.state.lblTips === "" ? "Tips y recomendaciones" : this.state.lblTips}>
                                             <ListGroup className="list-group-flush  ">
                                                 <ListGroupItem>
                                                     <Row className="p-3 m-0">
+                                                        <p> {this.state.sedeTips === "" ? this.state.sede.Tips : this.state.sedeTips}</p>
                                                         <p>{Parser(this.state.sede.Tips)} </p>
                                                     </Row>
                                                 </ListGroupItem>
@@ -443,12 +457,12 @@ class PerfilSede extends Component {
                             <Row className="p-3 m-0">
 
                                 <Col sm={12} md={6} className="mb-1">
-                                    <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >Ir al mapa </button>
+                                    <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{this.state.btnIrMapa === "" ? "Ir al mapa" : this.state.btnIrMapa}</button>
 
                                 </Col>
                                 <Col sm={12} md={6} className="mb-1">
 
-                                    <a target="_blank"  href={"https://maps.google.com?q=" + this.state.sede.Latitud + "," + this.state.sede.Longitud} className="btn btn-default btn-3d-style  btn-block" >Como llegar</a>
+                                    <a target="_blank" href={"https://maps.google.com?q=" + this.state.sede.Latitud + "," + this.state.sede.Longitud} className="btn btn-default btn-3d-style  btn-block" >{this.state.btnLlegar === "" ? "Como llegar" : this.state.btnLlegar}</a>
                                   
                                 </Col>
                             </Row>
