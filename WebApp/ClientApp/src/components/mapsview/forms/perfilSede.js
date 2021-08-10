@@ -189,6 +189,7 @@ class PerfilSede extends Component {
 
     render() {    
 
+
         return (
 
 
@@ -257,7 +258,7 @@ class PerfilSede extends Component {
                                          <Carousel>
                             {
                                             this.state.sede.ImagenesEmpresa.map((item, index) => {
-                                             console.log(item)
+                                            
                                                     return (
                                                        item.EsPrincipal ? <Carousel.Item className="item" key={index} >
                                                             <img
@@ -469,7 +470,7 @@ class PerfilSede extends Component {
                                     <div className="d-flex justify-content-center">
                                         <div className="row  w-100">
                                             <div className="col d-flex justify-content-center">
-                                                 <FacebookProvider appId="137904151817325">
+                                                <FacebookProvider appId="137904151817325">
                                             <Like href={"http://www.facebook.com/sharer.php?u=" + window.location.href}   />
                                         </FacebookProvider>
                                             </div>
@@ -504,7 +505,7 @@ class PerfilSede extends Component {
                                 <ListGroupItem >
                                     <h5><u>{this.props.t('Sede.Comentar')}</u></h5>
                                     <div className="d-flex justify-content-center">
-                                    <FacebookProvider appId="137904151817325">
+                                        <FacebookProvider appId="137904151817325">
                                         
                                             <Comments href={"http://www.facebook.com/sharer.php?u=" + window.location.href} />
 

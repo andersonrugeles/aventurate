@@ -109,7 +109,7 @@ class FiltroSubCategorias extends Component {
     render() {
 
         const { categoriasSubcategorias } = this.props;
-        console.log(categoriasSubcategorias)
+       
 
         return (
             <Modal

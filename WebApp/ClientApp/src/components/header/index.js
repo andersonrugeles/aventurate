@@ -100,10 +100,6 @@ class Header extends Component {
 
     render() {
 
-
-        console.log("nuevo")
-        
-
         return (
             <nav className="navbar-header navbar-expand-sm navbar-dark fixed-top ">
                 <Row className="content-logo pt-2 pb-2 justify-content-center">

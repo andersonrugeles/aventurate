@@ -125,7 +125,7 @@ class InicioSesion extends Component {
 
 
                             <Form.Group className="ml-3" >
-                                <FacebookProvider appId="137904151817325">
+                                <FacebookProvider appId={process.env.REACT_FACE_ID}>
 
                                     <Status>
                                         {({ loading, status }) => (
