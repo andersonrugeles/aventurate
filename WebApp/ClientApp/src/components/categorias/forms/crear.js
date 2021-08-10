@@ -18,8 +18,10 @@ class CrearCategoria extends Component {
             categoria: {
                 IdCategoria: 0,
                 Nombre: '',
+                EnNombre: '',
                 UrlImagen: '',
-                Orden:0
+                Orden: 0
+
                 
             },
             file: null
@@ -45,18 +47,22 @@ class CrearCategoria extends Component {
         });
     }
 
-     CreateSubCategoria(e) {
-       e.preventDefault();
+    CreateSubCategoria(e) {
+        e.preventDefault();
         const {
             categoria,
             file
         } = this.state;
-     
+
 
         if (!categoria.Nombre) {
             this.props.showMessage('Debe ingresar una nombre.', true, 'Información');
             return;
-         
+
+        } else if (!categoria.EnNombre) {
+            this.props.showMessage('Debe ingresar una nombre en ingles', true, 'Información');
+            return;
+    
         } else if (file == null || file.get("Imagen") == null) {
             this.props.showMessage('Debe seleccionar una imagén', true, 'Información');
             return;
@@ -67,6 +73,7 @@ class CrearCategoria extends Component {
          }
 
          file.append('Nombre', categoria.Nombre);
+         file.append('EnNombre', categoria.EnNombre);
          file.append('Orden', categoria.Orden);
          this.props.crear_categoria(file, this);
          this.props.ver_crear_categoria(false);
@@ -117,6 +124,11 @@ class CrearCategoria extends Component {
                             </Form.Group>
                         </Form.Row>
 
+                        <Form.Row sm={10}>
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="EnNombre" value={categoria.EnNombre} className="pz-input" onChange={this.InputChange} placeholder="Nombre en ingles" />
+                            </Form.Group>
+                        </Form.Row>
                         <Form.Group md="6" >
                             <Form.Control type="number" name="Orden" value={categoria.Orden} onChange={this.InputChange} onInput={(e) => { e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10); }}
                                 onKeyDown={e => /[\+\-\.\,]$/.test(e.key) && e.preventDefault()} className="pz-input" placeholder="Orden" />

@@ -10,7 +10,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import RoomOutlinedIcon from '@material-ui/icons/RoomOutlined';
 import RoomIcon from '@material-ui/icons/Room';
 import { loader } from '../../helpers/loader';
-import translate from "../../helpers/translate";
+import { withTranslation } from "react-i18next";
 
 
 class FiltroSubCategorias extends Component {
@@ -25,12 +25,13 @@ class FiltroSubCategorias extends Component {
         this.state = {
             lblText1: '',
             lblNombreCategoria: '',
-            lblNombreSubcategoria:''
+            lblNombreSubcategoria: '',
+            elementos:[]
         };
 
         this.FiltroChangeHandler = this.FiltroChangeHandler.bind(this);
         this.SelectAll = this.SelectAll.bind(this);
-        this.traducir = this.traducir.bind(this); 
+        
         
         
     }
@@ -93,33 +94,21 @@ class FiltroSubCategorias extends Component {
         this.setState({ selected: checked });
     }
 
-    componentDidMount() {
+   async  componentDidMount() {
         loader.show();
-        this.props.obtener_subcategorias(this.props.idCategoria, this);
-        this.traducir();
+        await this.props.obtener_subcategorias(this.props.idCategoria, this);
+      
 
     }
-    async traducir() {
-        if (localStorage.getItem('lenguaje') === 'español') {
-            this.setState({
-                lblText1: await translate('Seleccionar Todos', { to: "es", engine: "libre" }),
-                lblNombreCategoria: await translate(this.props.nombreCategoria, { to: "es", engine: "libre" })
-            });
-        } else if (localStorage.getItem('lenguaje') === 'ingles') {
-            this.setState({
-                lblText1: await translate('Seleccionar Todos', { to: "en", engine: "libre" }),
-                lblNombreCategoria: await translate(this.props.nombreCategoria, { to: "en", engine: "libre" })
-            });
-        }
-    }
+
+
+
+    
 
 
     render() {
 
         const { categoriasSubcategorias } = this.props;
-
-       
-
 
         return (
             <Modal
@@ -128,8 +117,9 @@ class FiltroSubCategorias extends Component {
                 size="sm"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
+                
             >
-                <Modal.Header  >
+                <Modal.Header closeButton >
                     <Modal.Title id="contained-modal-title-vcenter" className="text-center">
                         {this.state.lblNombreCategoria === '' ? this.props.nombreCategoria : this.state.lblNombreCategoria}
                     </Modal.Title>
@@ -149,7 +139,7 @@ class FiltroSubCategorias extends Component {
                                 <ListGroup.Item key={menuItem.IdCategoriaSubcategoria} >
                                     <FormControlLabel
                                         control={<Checkbox id={`item-f-${menuItem.IdCategoriaSubcategoria}`} checked={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoriaSubcategoria === menuItem.IdCategoriaSubcategoria)} onChange={(e, data) => this.FiltroChangeHandler(menuItem, data)} icon={<RoomOutlinedIcon fontSize="large" style={{ fill: "#97BF13" }} />} checkedIcon={<RoomIcon fontSize="large" style={{ fill: "#97BF13" }} />}  />}
-                                        label={<span ><img id={`item-f-${menuItem.IdCategoriaSubcategoria}`} style={{ width: "24px", heigth: "24px" }} alt={"image"} src={`/app-images/${menuItem.SubCategoria.UrlImagen}`} /> {menuItem.SubCategoria.Nombre}</span>}
+                                        label={<span ><img id={`item-f-${menuItem.IdCategoriaSubcategoria}`} style={{ width: "24px", heigth: "24px" }} alt={"image"} src={`/app-images/${menuItem.SubCategoria.UrlImagen}`} /> {this.props.i18n.language === "en" ? menuItem.SubCategoria.EnNombre : menuItem.SubCategoria.Nombre} </span>}
                                         
                             />
                         </ListGroup.Item>
@@ -187,5 +177,6 @@ const mapDispatchToProps = {
     
 };
 
+const compo = withTranslation('common')(FiltroSubCategorias)
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FiltroSubCategorias));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(compo));

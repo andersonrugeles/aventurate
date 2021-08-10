@@ -10,7 +10,9 @@ import { usuarioActions } from '../users/actions';
 import { Link } from "react-router-dom";
 import Spain from '../../img/generales/espana.png';
 import English from '../../img/generales/eeuu.png';
-import translate from "../helpers/translate";
+import { withTranslation } from "react-i18next";
+
+
 
 class Header extends Component {
 
@@ -18,20 +20,13 @@ class Header extends Component {
 
     constructor() {
         super();
-        this.state = {
-            lblBlog: '',
-            lblFotos: '',
-            lblInicio: '',
-            lblSomos: '',
-            lblContacto:''
-        };
         this.MostrarMenu = this.MostrarMenu.bind(this);
         this.MostrarLogin = this.MostrarLogin.bind(this);
         this.Logout = this.Logout.bind(this);
         this.ItemClick = this.ItemClick.bind(this);
         this.TranslateSpanish = this.TranslateSpanish.bind(this);
         this.TranslateEnglish = this.TranslateEnglish.bind(this);
-        this.traducir = this.traducir.bind(this);
+        
         
     }
 
@@ -52,38 +47,20 @@ class Header extends Component {
     }
 
     async componentDidMount() {
-        await this.traducir();
+        
+
+        localStorage.setItem('descripcion', "Esta es una descipcion de ejemplo");
+
+       
     }
     async TranslateSpanish() {
-        await localStorage.setItem('lenguaje', 'español');
-        window.location.reload(true);
+        this.props.i18n.changeLanguage('es')
     }
     async TranslateEnglish() {
-        await localStorage.setItem('lenguaje', 'ingles');
-        window.location.reload(true);
+        this.props.i18n.changeLanguage('en')
     }
 
-    async traducir() {
-        if (localStorage.getItem('lenguaje') === 'español') {
-            this.setState({
-                lblBlog: await translate('Blog', { to: "es", engine: "libre" }),
-                lblContacto: await translate('Contacto', { to: "es", engine: "libre" }),
-                lblFotos: await translate('Fotos', { to: "es", engine: "libre" }),
-                lblInicio: await translate('Inicio', { to: "es", engine: "libre" }),
-                lblSomos: await translate('Quienes Somos', { to: "es", engine: "libre" })
-            });
-
-
-        } else if (localStorage.getItem('lenguaje') === 'ingles') {
-            this.setState({
-                lblBlog: await translate('Blog', { to: "en", engine: "libre" }),
-                lblContacto: await translate('Contacto', { to: "en", engine: "libre" }),
-                lblFotos: await translate('Fotos', { to: "en", engine: "libre" }),
-                lblInicio: await translate('Inicio', { to: "en", engine: "libre" }),
-                lblSomos: await translate('Quiénes somos', { to: "en", engine: "libre" })
-            });
-        }
-    }
+  
     
     MostrarMenu(e) {
         e.stopPropagation();
@@ -122,6 +99,11 @@ class Header extends Component {
 }
 
     render() {
+
+
+        console.log("nuevo")
+        
+
         return (
             <nav className="navbar-header navbar-expand-sm navbar-dark fixed-top ">
                 <Row className="content-logo pt-2 pb-2 justify-content-center">
@@ -130,9 +112,7 @@ class Header extends Component {
                     <Col sm={1} md={1} className="text-center" ><a target="_blank" href="https://www.twitter.com/coaventurate/"> <i className="fa fa-twitter" aria-hidden="true" /></a></Col>
                     <Col sm={1} md={1} className="text-center" >
                         <Link to="/"  >
-
                             <img className="logo" src={"/app-images/generales/logo_main.png"} alt="logo" />
-                            
                         </Link>
                    </Col>
                     <Col sm={1} md={1} className="text-center" ><a target="_blank" href="https://www.youtube.com/channel/UCV2sfnegKuPQsgxo9XfhXEA"> <i className="fa fa-youtube-play" aria-hidden="true" />  </a></Col>
@@ -169,7 +149,7 @@ class Header extends Component {
                                     <div onClick={this.ItemClick} id='blog'  >
                                         <Link to="/blog" id='blog' className={this.props.id_item_menu === "blog" ? "active" : ""} >
                                         <Row>
-                                            <Col xs={12} md={12} className="text-center" id='blog'>{this.state.lblBlog === "" ? "Blog" : this.state.lblBlog}</Col>
+                                            <Col xs={12} md={12} className="text-center" id='blog'>{this.props.t('Index.Blog')}</Col>
                                             </Row>
                                         </Link>
                                     </div>
@@ -178,7 +158,7 @@ class Header extends Component {
                                     <div onClick={this.ItemClick} id='fotos' >
                                         <Link to="/galeria" id='fotos' className={this.props.id_item_menu === "fotos" ? "active" : ""}  >
                                         <Row>
-                                            <Col xs={12} md={12} className="text-center" id='fotos'>{this.state.lblFotos === "" ? "Fotos" : this.state.lblFotos}</Col>
+                                            <Col xs={12} md={12} className="text-center" id='fotos'>{this.props.t('Index.Fotos')}</Col>
                                             </Row>
                                         </Link>
                                     </div>
@@ -188,7 +168,7 @@ class Header extends Component {
                                     <div onClick={this.ItemClick} id='inicio'  >
                                         <Link to="/" id='inicio' className={this.props.id_item_menu === "inicio" ? "active" : ""} >
                                         <Row>
-                                            <Col xs={12} md={12} className="text-center" id='inicio'>{this.state.lblInicio === "" ? "Inicio" : this.state.lblInicio}</Col>
+                                            <Col xs={12} md={12} className="text-center" id='inicio'>{this.props.t('Index.Inicio')}</Col>
                                             </Row>
                                         </Link>
                                     </div>
@@ -198,7 +178,7 @@ class Header extends Component {
                                     <div onClick={this.ItemClick} id='quienes'  >
                                         <Link to="/quienes_somos" id='quienes' className={this.props.id_item_menu === "quienes" ? "active" : ""} >
                                         <Row>
-                                            <Col xs={12} md={12} className="text-center" id='quienes'>{this.state.lblSomos === "" ? "Quiénes somos" : this.state.lblSomos}</Col>
+                                            <Col xs={12} md={12} className="text-center" id='quienes'>{this.props.t('Index.Somos')}</Col>
                                             </Row>
                                         </Link>
                                     </div>
@@ -206,15 +186,21 @@ class Header extends Component {
                                     <div onClick={this.ItemClick} id='contacto'>
                                         <Link to="/contacto" id='contacto' className={this.props.id_item_menu === "contacto" ? "active" : ""}  >
                                         <Row>
-                                            <Col xs={12} md={12} className="text-center" id='contacto'>{this.state.lblContacto === "" ? "Contacto" : this.state.lblContacto}</Col>
+                                            <Col xs={12} md={12} className="text-center" id='contacto'>{this.props.t('Index.Contacto')}</Col>
                                             </Row>
                                         </Link>
                                 </div>
                                 <div>
                                     <Row>
                                         <Col xs={12} md={12} className="div-spain" id='contacto'>
-                                            <img src={Spain} alt="Spain" className="spain" onClick={this.TranslateSpanish} />
-                                            <img src={English} alt="Spain" className="spain" onClick={this.TranslateEnglish} />
+                                            <button className="react-share__ShareButton menu-button" onClick={this.TranslateEnglish}  >
+                                                <img src={English} alt="Spain" className="spain" />
+                                            </button>
+
+                                            <button className="react-share__ShareButton menu-button" onClick={this.TranslateSpanish}  >
+                                                <img src={Spain} alt="Spain" className="spain" />
+                                            </button>
+                                           
                                         </Col>
 
                                     </Row>
@@ -263,10 +249,10 @@ const mapDispatchToProps = {
     lateral_menu_visible: LateralMenuActions.lateral_menu_visible,
     logout: usuarioActions.logout,
     seleccionar_id_item: HeaderActions.seleccionar_id_item,
-
 };
 
 
+const compo = withTranslation('common') (Header)
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(compo));

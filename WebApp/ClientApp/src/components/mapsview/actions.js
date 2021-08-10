@@ -19,9 +19,9 @@ export const mapsActions = {
 };
 
  function obtener_municipio(IdMunicipio) {
-    return dispatch => {
+    return async dispatch => {
 
-        ServicesHelper.obtener_municipio(IdMunicipio)
+      await  ServicesHelper.obtener_municipio(IdMunicipio)
             .then(
                 response => {
                     loader.hide();

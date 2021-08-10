@@ -11,5 +11,7 @@ namespace WebApp.Class
     {
         [JsonProperty(PropertyName = "NombreSubcategoria")]
         public string NombreSubcategoria { get; set; }
+        [JsonProperty(PropertyName = "EnNombreSubcategoria")]
+        public string EnNombreSubcategoria { get; set; }
     }
 }

@@ -119,6 +119,7 @@ namespace WebApp.Controllers
                         var subcategoria = new SubCategorias
                         {
                             Nombre = form["Nombre"],
+                            EnNombre = form["EnNombre"],
                             UrlImagen = "subcategorias/" + FileName,
 
                         };
@@ -282,7 +283,8 @@ namespace WebApp.Controllers
                 IdCategoriaSubcategoria = catSub.IdCategoriaSubcategoria,
                 IdSubCategoria = catSub.IdSubCategoria,
                 NombreSubcategoria = catSub.SubCategoria.Nombre,
-                SubCategoria= catSub.SubCategoria
+                EnNombreSubcategoria = catSub.SubCategoria.EnNombre,
+                SubCategoria = catSub.SubCategoria
 
             };
         }

@@ -5,7 +5,7 @@ import { SedeActions } from '../actions';
 import { EmpresaActions } from '../../empresas/actions';
 import { loader } from '../../helpers/loader';
 import { alertActions } from '../../alert_message/actions';
-import { Modal, Form, Col } from 'react-bootstrap';
+import { Modal, Form, Col,ListGroup } from 'react-bootstrap';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import { ComboBoxComponent } from '@syncfusion/ej2-react-dropdowns';
 import L, { map } from 'leaflet';
@@ -34,6 +34,7 @@ class CrearSede extends Component {
                 IdCategoriaSubcategoria: 0,
                 IdTipoSede: 0,
                 Descripcion: '',
+
                 URLImagen1: '',
                 URLImagen2: '',
                 URLImagen3: '',
@@ -43,6 +44,27 @@ class CrearSede extends Component {
                 URLImagen7: '',
                 URLImagen8: '',
                 URLImagen9: '',
+                URLImagen10: '',
+                URLImagen11: '',
+                URLImagen12: '',
+                URLImagen13: '',
+                URLImagen14: '',
+
+                EsVideo1: false,
+                EsVideo2: false,
+                EsVideo3: false,
+                EsVideo4: false,
+                EsVideo5: false,
+                EsVideo6: false,
+                EsVideo7: false,
+                EsVideo8: false,
+                EsVideo9: false,
+                EsVideo10: false,
+                EsVideo11: false,
+                EsVideo12: false,
+                EsVideo13: false,
+                EsVideo14: false,
+
                 IdEmpresa: this.props.IdEmpresa,
                 Anexo: '',
                 Precio: '',
@@ -55,8 +77,10 @@ class CrearSede extends Component {
                 NombreTwitter: '',
                 TwitterUrl: '',
                 Pagina: '',
-                EsVideo:false
 
+                EnDescripcion: '',
+                EnTips: '',
+                EnAnexo: '',
             },
             file: null
         };
@@ -156,8 +180,16 @@ class CrearSede extends Component {
         else if (!sede.Descripcion) {
            this.props.showMessage('Debe ingresar una descripción.', true, 'Información');
               return;
-          } else if (!sede.Anexo) {
+          }
+          else if (!sede.EnDescripcion) {
+              this.props.showMessage('Debe ingresar una descripción en ingles.', true, 'Información');
+              return;
+          }
+          else if (!sede.Anexo) {
               this.props.showMessage('Debe ingresar un anexo.', true, 'Información');
+              return;
+          } else if (!sede.EnAnexo) {
+              this.props.showMessage('Debe ingresar un anexo en ingles.', true, 'Información');
               return;
           } else if (!sede.Horarios) {
             this.props.showMessage('Debe ingresar un horario.', true, 'Información');
@@ -184,6 +216,12 @@ class CrearSede extends Component {
           } else if (sede.IdCategoriaSubcategoria === 0) {
               this.props.showMessage('Debe selecionar  una subcategoria.', true, 'Información');
               return;
+          } else if (!sede.Tips) {
+              this.props.showMessage('Debe ingresar tips.', true, 'Información');
+              return;
+          } else if (!sede.EnTips) {
+              this.props.showMessage('Debe ingresar tips. en ingles', true, 'Información');
+              return;
           }
 
         file.append('Nombre', sede.Nombre);
@@ -202,12 +240,36 @@ class CrearSede extends Component {
         file.append('URLImagen7', sede.URLImagen7);
         file.append('URLImagen8', sede.URLImagen8);
         file.append('URLImagen9', sede.URLImagen9);
-        file.append('EsVideo', sede.EsVideo);
+        file.append('URLImagen10', sede.URLImagen6);
+        file.append('URLImagen11', sede.URLImagen7);
+        file.append('URLImagen12', sede.URLImagen8);
+        file.append('URLImagen13', sede.URLImagen9);
+        file.append('URLImagen14', sede.URLImagen9);
+
+        file.append('EsVideo1', false);
+        file.append('EsVideo2', false);
+        file.append('EsVideo3', false);
+        file.append('EsVideo4', false);
+        file.append('EsVideo5', false);
+        file.append('EsVideo6', sede.EsVideo6);
+        file.append('EsVideo7', sede.EsVideo7);
+        file.append('EsVideo8', sede.EsVideo8);
+        file.append('EsVideo9', sede.EsVideo9);
+        file.append('EsVideo10', sede.EsVideo6);
+        file.append('EsVideo11', sede.EsVideo7);
+        file.append('EsVideo12', sede.EsVideo8);
+        file.append('EsVideo13', sede.EsVideo9);
+        file.append('EsVideo14', sede.EsVideo6);
+ 
+
         file.append('IdTipoSede', sede.IdTipoSede);
         file.append('IdTipoSede', sede.IdTipoSede);
         file.append('IdEmpresa', sede.IdEmpresa);
         file.append('Descripcion', sede.Descripcion);
+        file.append('EnDescripcion', sede.EnDescripcion);
         file.append('Anexo', sede.Anexo);
+        file.append('EnAnexo', sede.EnAnexo);
+        file.append('EnTips', sede.EnTips);
         file.append('Precio', sede.Precio);
         file.append('InstagramUrl', sede.InstagramUrl);
         file.append('NombreInstagram', sede.NombreInstagram);
@@ -215,6 +277,7 @@ class CrearSede extends Component {
         file.append('NombreFacebook', sede.NombreFacebook);
         file.append('Correo', sede.Correo);
         file.append('Tips', sede.Tips);
+        file.append('EnTips', sede.EnTips);
         file.append('NombreTwitter', sede.NombreTwitter);
         file.append('TwitterUrl', sede.TwitterUrl);
         file.append('Pagina', sede.Pagina);
@@ -259,6 +322,7 @@ class CrearSede extends Component {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
+                onHide={() => this.props.ver_crear_sede(false)}
             >
              
                 <Modal.Header >
@@ -298,7 +362,13 @@ class CrearSede extends Component {
                             <Form.Control type="text"  name="Descripcion" value={sede.Descripcion} onChange={this.InputChange} className="pz-input" placeholder="Descripcion" />
                         </Form.Group>
                         <Form.Group md="6" >
+                            <Form.Control type="text" name="EnDescripcion" value={sede.EnDescripcion} onChange={this.InputChange} className="pz-input" placeholder="Descripcion en Ingles" />
+                        </Form.Group>
+                        <Form.Group md="6" >
                             <Form.Control type="text" maxLength={144} name="Anexo" value={sede.Anexo} onChange={this.InputChange} className="pz-input" placeholder="Anexo" />
+                        </Form.Group>
+                        <Form.Group md="6" >
+                            <Form.Control type="text" maxLength={144} name="EnAnexo" value={sede.EnAnexo} onChange={this.InputChange} className="pz-input" placeholder="Anexo en Ingles" />
                         </Form.Group>
                         <Form.Group md="6" >
                             <Form.Control type="text"  name="Precio" value={sede.Precio} onChange={this.InputChange} className="pz-input" placeholder="Rango de Precios" />
@@ -312,42 +382,134 @@ class CrearSede extends Component {
                         <Form.Group md="6" >
                             <Form.Control type="text" maxLength={100} name="Longitud" value={sede.Longitud} onChange={this.InputChange} className="pz-input" placeholder="Longitud" />
                         </Form.Group>
+
+                        <ListGroup className="pt-1 pb-2">
+                            <ListGroup.Item>
+                                <h3>Galería principal</h3>
+
+
                         <Form.Group md="6" >
                             <Form.Group as={Col} >
                                 <Form.Control type="text" name="URLImagen1" value={sede.URLImagen1} onChange={this.InputChange} className="pz-input" placeholder="URLImagen1" />
                             </Form.Group>
+                        
+                        </Form.Group>
+
+                        <Form.Group md="6" >
                             <Form.Group as={Col} >
-                                <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo} change={(val) => { this.InputChange({ target: { name: 'EsVideo', value: val.checked } }); }} />
+                                <Form.Control type="text" name="URLImagen2" value={sede.URLImagen2} onChange={this.InputChange} className="pz-input" placeholder="URLImagen2" />
                             </Form.Group>
+                      
+                        </Form.Group>
 
+                        <Form.Group md="6" >
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen3" value={sede.URLImagen3} onChange={this.InputChange} className="pz-input" placeholder="URLImagen3" />
+                            </Form.Group>
                            
+                        </Form.Group>
 
+                        <Form.Group md="6" >
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen4" value={sede.URLImagen4} onChange={this.InputChange} className="pz-input" placeholder="URLImagen4" />
+                            </Form.Group>
+                      
+                        </Form.Group>
 
-                        </Form.Group>
                         <Form.Group md="6" >
-                            <Form.Control type="text"  name="URLImagen2" value={sede.URLImagen2} onChange={this.InputChange} className="pz-input" placeholder="URLImagen2" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen5" value={sede.URLImagen5} onChange={this.InputChange} className="pz-input" placeholder="URLImagen5" />
+                            </Form.Group>
+                        
                         </Form.Group>
+
+                            </ListGroup.Item>
+                       
+                            <ListGroup.Item>
+                                <h3>Galería Secundaría</h3>
                         <Form.Group md="6" >
-                            <Form.Control type="text"  name="URLImagen3" value={sede.URLImagen3} onChange={this.InputChange} className="pz-input" placeholder="URLImagen3" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen6" value={sede.URLImagen6} onChange={this.InputChange} className="pz-input" placeholder="URLImagen6" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo6} change={(val) => { this.InputChange({ target: { name: 'EsVideo6', value: val.checked } }); }} />
+                            </Form.Group>
                         </Form.Group>
+
                         <Form.Group md="6" >
-                            <Form.Control type="text"  name="URLImagen4" value={sede.URLImagen4} onChange={this.InputChange} className="pz-input" placeholder="URLImagen4" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen7" value={sede.URLImagen7} onChange={this.InputChange} className="pz-input" placeholder="URLImagen7" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo7} change={(val) => { this.InputChange({ target: { name: 'EsVideo7', value: val.checked } }); }} />
+                            </Form.Group>
                         </Form.Group>
+
                         <Form.Group md="6" >
-                            <Form.Control type="text"  name="URLImagen5" value={sede.URLImagen5} onChange={this.InputChange} className="pz-input" placeholder="URLImagen5" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen8" value={sede.URLImagen8} onChange={this.InputChange} className="pz-input" placeholder="URLImagen8" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo8} change={(val) => { this.InputChange({ target: { name: 'EsVideo8', value: val.checked } }); }} />
+                            </Form.Group>
                         </Form.Group>
+
                         <Form.Group md="6" >
-                            <Form.Control type="text" name="URLImagen6" value={sede.URLImagen6} onChange={this.InputChange} className="pz-input" placeholder="URLImagen6" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen9" value={sede.URLImagen9} onChange={this.InputChange} className="pz-input" placeholder="URLImagen9" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo9} change={(val) => { this.InputChange({ target: { name: 'EsVideo9', value: val.checked } }); }} />
+                            </Form.Group>
                         </Form.Group>
+
                         <Form.Group md="6" >
-                            <Form.Control type="text" name="URLImagen7" value={sede.URLImagen7} onChange={this.InputChange} className="pz-input" placeholder="URLImagen7" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen10" value={sede.URLImagen9} onChange={this.InputChange} className="pz-input" placeholder="URLImagen10" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo10} change={(val) => { this.InputChange({ target: { name: 'EsVideo10', value: val.checked } }); }} />
+                            </Form.Group>
                         </Form.Group>
+
                         <Form.Group md="6" >
-                            <Form.Control type="text" name="URLImagen8" value={sede.URLImagen8} onChange={this.InputChange} className="pz-input" placeholder="URLImagen8" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen11" value={sede.URLImagen11} onChange={this.InputChange} className="pz-input" placeholder="URLImagen11" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo11} change={(val) => { this.InputChange({ target: { name: 'EsVideo11', value: val.checked } }); }} />
+                            </Form.Group>
                         </Form.Group>
+
                         <Form.Group md="6" >
-                            <Form.Control type="text" name="URLImagen9" value={sede.URLImagen9} onChange={this.InputChange} className="pz-input" placeholder="URLImagen9" />
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen12" value={sede.URLImagen12} onChange={this.InputChange} className="pz-input" placeholder="URLImagen12" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo12} change={(val) => { this.InputChange({ target: { name: 'EsVideo12', value: val.checked } }); }} />
+                            </Form.Group>
                         </Form.Group>
+
+                        <Form.Group md="6" >
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen13" value={sede.URLImagen13} onChange={this.InputChange} className="pz-input" placeholder="URLImagen13" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo13} change={(val) => { this.InputChange({ target: { name: 'EsVideo13', value: val.checked } }); }} />
+                            </Form.Group>
+                        </Form.Group>
+
+                        <Form.Group md="6" >
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="URLImagen14" value={sede.URLImagen14} onChange={this.InputChange} className="pz-input" placeholder="URLImagen14" />
+                            </Form.Group>
+                            <Form.Group as={Col} >
+                                        <CheckBoxComponent label='EsVideo' checked={this.state.sede.EsVideo14} change={(val) => { this.InputChange({ target: { name: 'EsVideo14', value: val.checked } }); }} />
+                            </Form.Group>
+                                </Form.Group>
+                            </ListGroup.Item>
+                        </ListGroup>
+
                         <Form.Group md="6" >
                             <Form.Control type="text"  name="NombreTwitter" value={sede.NombreTwitter} onChange={this.InputChange} className="pz-input" placeholder="NombreTwitter" />
                         </Form.Group>
@@ -374,6 +536,9 @@ class CrearSede extends Component {
                         </Form.Group>
                         <Form.Group md="6" >
                             <Form.Control type="text"  name="Tips" value={sede.Tips} onChange={this.InputChange} className="pz-input" placeholder="Tips" />
+                        </Form.Group>
+                        <Form.Group md="6" >
+                            <Form.Control type="text" name="EnTips" value={sede.EnTips} onChange={this.InputChange} className="pz-input" placeholder="Tips en ingles" />
                         </Form.Group>
 
                         <Form.Group md="6" >

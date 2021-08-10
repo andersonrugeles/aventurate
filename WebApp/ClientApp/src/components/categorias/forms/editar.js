@@ -19,6 +19,7 @@ class EditarCategoria extends Component {
             categoria: {
                 IdCategoria: 0,
                 Nombre: '',
+                EnNombre: '',
                 UrlImagen: '',
 
             },
@@ -57,7 +58,11 @@ class EditarCategoria extends Component {
             this.props.showMessage('Debe ingresar un nombre.', true, 'Información');
             return;
 
-        } else if (!categoria.Orden === 0) {
+        } else if  (!categoria.EnNombre) {
+            this.props.showMessage('Debe ingresar un nombre en ingles.', true, 'Información');
+            return;
+
+        }else if (!categoria.Orden === 0) {
             this.props.showMessage('Debe ingresar un un numero de ordén.', true, 'Información');
             return;
 
@@ -69,6 +74,7 @@ class EditarCategoria extends Component {
        
 
         form.append('Nombre', categoria.Nombre);
+        form.append('EnNombre', categoria.EnNombre);
         form.append('UrlImagen', categoria.UrlImagen);
         form.append('Orden', categoria.Orden);
         form.append('IdCategoria', localStorage.getItem('idCategoriaSeleccionada'));
@@ -133,7 +139,11 @@ class EditarCategoria extends Component {
                                 <Form.Control type="text" name="Nombre" value={categoria.Nombre}  className="pz-input" onChange={this.InputChange} placeholder="Nombre" />
                             </Form.Group>
                         </Form.Row>
-
+                        <Form.Row sm={10}>
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="EnNombre" value={categoria.EnNombre} className="pz-input" onChange={this.InputChange} placeholder="Nombre en ingles" />
+                            </Form.Group>
+                        </Form.Row>
                         <Form.Group md="6" >
                             <Form.Control type="number" name="Orden" value={categoria.Orden} onChange={this.InputChange} onInput={(e) => { e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10); }}
                                 onKeyDown={e => /[\+\-\.\,]$/.test(e.key) && e.preventDefault()} className="pz-input" placeholder="Orden" />

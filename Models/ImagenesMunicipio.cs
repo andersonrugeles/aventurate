@@ -20,6 +20,18 @@ namespace Models
         [JsonProperty(PropertyName = "UrlImagen")]
         public string UrlImagen { get; set; }
 
+        [Display(Name = "EsVideo")]
+        [JsonProperty(PropertyName = "EsVideo")]
+        public bool EsVideo { get; set; }
+        [Display(Name = "EsPrincipal")]
+        [JsonProperty(PropertyName = "EsPrincipal")]
+        public bool EsPrincipal { get; set; }
+
+        [JsonProperty(PropertyName = "Orden")]
+        [Display(Name = "Orden")]
+        [Required(ErrorMessage = "El dato {0} es necesario")]
+        public int? Orden { get; set; }
+
         [Display(Name = "Municipio")]
         [Required(ErrorMessage = "El dato {0} es necesario")]
         [JsonProperty(PropertyName = "IdMunicipio")]

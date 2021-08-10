@@ -12,10 +12,15 @@ import store from './store';
 import "leaflet/dist/leaflet.css";
 
 
+
+
+
 const Root = (
     <Provider store={store}>
         <Router history={history}>
-            <AppRoutes />
+           
+                <AppRoutes />
+           
         </Router>
     </Provider>
 );

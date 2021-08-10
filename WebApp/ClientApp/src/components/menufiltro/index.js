@@ -9,7 +9,7 @@ import SubCategoriasFiltro from './form/filtroSubCategorias';
 import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { mapsActions } from '../mapsview/actions';
 import L, { map } from 'leaflet';
-import translate from "../helpers/translate";
+import { withTranslation } from "react-i18next";
 
 
 
@@ -28,7 +28,9 @@ class MenuFiltro extends Component {
             fillOpacity: 0.7,
             dashArray: ' ',
             fillColor: '#3FBF77',
-        }
+        },
+        categor_filter: [],
+      
     }
 
     constructor(props) {
@@ -36,41 +38,17 @@ class MenuFiltro extends Component {
         this.AbrirFiltroFlotante = this.AbrirFiltroFlotante.bind(this);
         this.FiltroGeneral = this.FiltroGeneral.bind(this);
         this.LimpiarFiltros = this.LimpiarFiltros.bind(this);
-        this.state = {
-            lblRestablecer: '',
-            lblEliminar: '',
-            lblPrincipal:''
-        };
-
-        this.traducir = this.traducir.bind(this);
         this.VerInicioFacebook = this.VerInicioFacebook.bind(this);
 
         
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         loader.show();
-        this.props.obtener_categorias();
-        this.traducir();
+        await this.props.obtener_categorias();
+       
     }
-    async traducir() {
-        loader.show();
-        if (localStorage.getItem('lenguaje') === 'español') {
-            this.setState({
-                lblRestablecer: await translate('Restablecer', { to: "es", engine: "libre" }),
-                lblEliminar: await translate('Eliminar Filtros', { to: "es", engine: "libre" }),
-                lblPrincipal: await translate('Principal', { to: "es", engine: "libre" })
-            });
-        } else if (localStorage.getItem('lenguaje') === 'ingles') {
-            this.setState({
-                lblRestablecer: await translate('Restablecer', { to: "en", engine: "libre" }),
-                lblEliminar: await translate('Eliminar Filtros', { to: "en", engine: "libre" }),
-                lblPrincipal: await translate('Principal', { to: "en", engine: "libre" })
 
-            });
-        }
-        loader.hide();
-    }
 
     AbrirFiltroFlotante(e) {
         e.stopPropagation();
@@ -80,10 +58,7 @@ class MenuFiltro extends Component {
         var id = e.target.id;
         var nombreCategoria = e.target.title;
 
-        if (this.state.idItemActive !== '') {
-
-            document.getElementById(this.state.idItemActive).classList.remove("itemFilterActive");
-        }
+       
         var idCategoria = id.substring((id.lastIndexOf("-")+1), id.length);
 
         this.setState({
@@ -125,19 +100,21 @@ class MenuFiltro extends Component {
         var arreglo = [];
         this.props.agregar_items_filtro(arreglo);
         await this.props.obtener_sedes(arreglo, 0, this);
+        
     }
 
     async VerInicioFacebook() {
         this.props.ver_incio_facebook(true)
     }
 
+   
+
+
+
 
     render() {
      
-        const { categorias, itemActiveClass, verFiltroFlotante } = this.props;
-
-    
-
+        const { categorias } = this.props;
 
         return (
 
@@ -146,18 +123,22 @@ class MenuFiltro extends Component {
                 <div className="floating-menu ">
                 <ul className="icon-bar list-inline mx-auto justify-content-center">
                     {
-                        categorias.map(({ IdCategoria, Nombre, UrlImagen }, i) => (
-                            <li id={`item-f-${IdCategoria}`} title='hola' key={i} onClick={this.AbrirFiltroFlotante} className={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoria === IdCategoria) ? 'itemFilterActiveSub' : ''} >
+
+                        categorias.map(({ IdCategoria, Nombre, UrlImagen, EnNombre }, i) => (
+                          
+                            <li id={`item-f-${IdCategoria}`} key={i} onClick={this.AbrirFiltroFlotante} title={Nombre}  className={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoria === IdCategoria) ? 'itemFilterActiveSub' : ''} >
                                 <OverlayTrigger
                                     placement="bottom"
                                     overlay={
                                         <Tooltip>
-                                            {Nombre} 
+
+                                            {this.props.i18n.language === "en" ? EnNombre : Nombre}
+                                            
                                          </Tooltip>
                                     }
                                 >
-                                    <a href="#" id={`item-f-${IdCategoria}`} title={Nombre} >
-                                        <img id={`item-f-${IdCategoria}`} title={Nombre} alt={Nombre} src={`/app-images/${UrlImagen}`} />
+                                    <a href="#" id={`item-f-${IdCategoria}`} title={ this.props.i18n.language === "en" ? EnNombre : Nombre } >
+                                        <img id={`item-f-${IdCategoria}`} title={this.props.i18n.language === "en" ? EnNombre : Nombre} alt={Nombre} src={`/app-images/${UrlImagen}`} />
                                     </a>
                                 </OverlayTrigger>
                             </li>
@@ -168,11 +149,10 @@ class MenuFiltro extends Component {
                         placement="bottom"
                         overlay={
                             <Tooltip>
-                                {this.state.lblRestablecer === "" ? "Restablecer" : this.state.lblRestablecer}
+                                {this.props.t('Index.Restablecer')}
                             </Tooltip>
                         }
                     >
-
                             <a href="#" onClick={this.FiltroGeneral} >
                                 <img alt="restar filter" src={`/app-images/categorias/restart_filter.png`} />
                             </a>
@@ -185,7 +165,7 @@ class MenuFiltro extends Component {
                             placement="bottom"
                             overlay={
                                 <Tooltip>
-                                    {this.state.lblEliminar === "" ? "Eliminar Filtros" : this.state.lblEliminar}
+                                    {this.props.t('Index.EliminarFiltros')}
                             </Tooltip>
                             }
                         >
@@ -199,29 +179,13 @@ class MenuFiltro extends Component {
                     </li>
                     <li className="municipio-select1 view-municipio"  >
                         <p>
-
-                            { this.props.municipio === null ? "Principal" : this.props.municipio.Nombre }
+                          
+                            {this.props.municipio === null ? this.props.t('Index.Principal')  : this.props.municipio.Nombre }
                         </p>
                        
 
                     </li>
-                    <li onClick={this.VerInicioFacebook}>
-                        <OverlayTrigger
-                            placement="bottom"
-                            overlay={
-                                <Tooltip>
-                                   Iniciar Sesión
-                            </Tooltip>
-                            }
-                        >
-
-                            <a href="#"  >
-                                <i className="fa fa-user text-white" aria-hidden="true"></i>
-                            </a>
-
-                        </OverlayTrigger>
-
-                    </li>
+                   
                    
                 </ul>
 
@@ -285,6 +249,6 @@ const mapDispatchToProps = {
   
 };
 
+const compo = withTranslation('common')(MenuFiltro)
 
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MenuFiltro));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(compo));

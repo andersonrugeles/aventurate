@@ -19,6 +19,7 @@ class EditarCategoria extends Component {
             subcategoria: {
                 IdSubCategoria: 0,
                 Nombre: '',
+                EnNombre: '',
                 UrlImagen: '',
 
             },
@@ -57,13 +58,18 @@ class EditarCategoria extends Component {
             this.props.showMessage('Debe ingresar una nombre.', true, 'Información');
             return;
 
+        }else if (!subcategoria.EnNombre) {
+            this.props.showMessage('Debe ingresar una nombre en ingles.', true, 'Información');
+            return;
+
         } 
 
         if (form == null ) {
             form = new FormData();
         }
-       
 
+    
+        form.append('EnNombre', subcategoria.EnNombre);
         form.append('Nombre', subcategoria.Nombre);
         form.append('UrlImagen', subcategoria.UrlImagen);
         form.append('IdSubCategoria', localStorage.getItem('idSubCategoriaSeleccionada'));
@@ -126,6 +132,12 @@ class EditarCategoria extends Component {
                         <Form.Row sm={10}>
                             <Form.Group as={Col} >
                                 <Form.Control type="text" name="Nombre" value={subcategoria.Nombre} maxLength={15} className="pz-input" onChange={this.InputChange} placeholder="Nombre" />
+                            </Form.Group>
+                        </Form.Row>
+
+                        <Form.Row sm={10}>
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="EnNombre" value={subcategoria.EnNombre} maxLength={15} className="pz-input" onChange={this.InputChange} placeholder="Nombre en ingles" />
                             </Form.Group>
                         </Form.Row>
 

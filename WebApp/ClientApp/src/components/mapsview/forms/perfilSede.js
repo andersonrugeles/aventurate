@@ -14,6 +14,12 @@ import Parser from 'html-react-parser';
 import ImageGallery from 'react-image-gallery';
 import {FacebookShareButton, FacebookIcon, WhatsappShareButton,FacebookMessengerShareButton,FacebookMessengerIcon, WhatsappIcon   
 } from "react-share";
+import inst from '../../../img/generales/instagram.png';
+import { withTranslation } from "react-i18next";
+import Metatags from '../../helpers/metatags';
+
+
+
 
 class PerfilSede extends Component {
 
@@ -21,7 +27,7 @@ class PerfilSede extends Component {
     constructor(props) {
         super(props);
         this.volver = this.volver.bind(this);
-      
+        this.onClickIns = this.onClickIns.bind(this);
 
         this.state = {
             sede: {
@@ -54,15 +60,12 @@ class PerfilSede extends Component {
                 TwitterUrl: '',
                 NombreTwitter: '',
                 Pagina: '',
-                btnIrMapa: '',
-                lblInformacion: '',
-                lblDetalle: '',
-                lblContacto: '',
-                btnLlegar: '',
-                lblTips: '',
-                sedeTips:''
+                EnDescripcion: '',
+                EnTips: '',
+                EnAnexo: '',
+             
             },
-            lblDescripcion: "",
+   
             showVideo: {},
             images_gallery: [],
             url: "https://www.w3schools.com/html/"
@@ -83,41 +86,13 @@ class PerfilSede extends Component {
 
         let param = this.props.match.params.id;
         const id = param.substring(param.indexOf("_") + 1, param.length) 
-       await this.props.obtener_sede(id, this);
+        await this.props.obtener_sede(id, this);
         this.obtener_img_gall();
-        this.props.obtener_sede(parseInt(localStorage.getItem('IdSede')), this);
-        this.traducir();
+        await this.props.obtener_sede(parseInt(localStorage.getItem('IdSede')), this);
+
+    
     }
-
-  
-
-
-    async traducir() {
-        loader.show();
-        if (localStorage.getItem('lenguaje') === 'español') {
-            this.setState({
-                btnIrMapa: await translate('Ir al mapa', { to: "es", engine: "libre" }),
-                lblInformacion: await translate('Informacion', { to: "es", engine: "libre" }),
-                lblDetalle: await translate('Detalles', { to: "es", engine: "libre" }),
-                lblContacto: await translate('Datos de contacto', { to: "es", engine: "libre" }),
-                btnLlegar: await translate('Como llegar', { to: "es", engine: "libre" }),
-                lblTips: await translate('Tips y recomendaciones', { to: "es", engine: "libre" }),
-                sedeTips: await translate(this.state.sede.Tips, { to: "es", engine: "libre" })
-            });
-        } else if (localStorage.getItem('lenguaje') === 'ingles') {
-            this.setState({
-                btnIrMapa: await translate('Ir al mapa', { to: "en", engine: "libre" }),
-                lblInformacion: await translate('Informacion', { to: "en", engine: "libre" }),
-                lblDetalle: await translate('Detalles', { to: "en", engine: "libre" }),
-                lblContacto: await translate('Datos de contacto', { to: "en", engine: "libre" }),
-                btnLlegar: await translate('Como llegar', { to: "en", engine: "libre" }),
-                lblTips: await translate('Tips y recomendaciones', { to: "en", engine: "libre" }),
-                sedeTips: await translate(this.state.sede.Tips, { to: "en", engine: "libre" })
-            });
-        }
-
-
-    }
+    
 
     _toggleShowVideo(url) {
         this.state.showVideo[url] = !Boolean(this.state.showVideo[url]);
@@ -145,6 +120,7 @@ class PerfilSede extends Component {
                             <a
                                 className='close-video'
                                 onClick={this._toggleShowVideo.bind(this, item.embedUrl)}
+                                
                             >
                             </a>
                             <iframe
@@ -178,12 +154,26 @@ class PerfilSede extends Component {
     obtener_img_gall() {
         const images = [];
 
-        this.state.sede.ImagenesEmpresa.map((item, index) => {
 
-            images.push({
-                original: item.UrlImagen,
-                thumbnail: item.UrlImagen,
-            })
+
+        this.state.sede.ImagenesEmpresa.map((item, index) => {
+            if (!item.EsPrincipal) {
+                if (item.EsVideo) {
+                    images.push({
+                        original: 'https://raw.githubusercontent.com/xiaolin/react-image-gallery/master/static/4v.jpg',
+                        thumbnail: 'https://raw.githubusercontent.com/xiaolin/react-image-gallery/master/static/4v.jpg',
+                        embedUrl: item.UrlImagen,
+                        renderItem: this._renderVideo.bind(this)
+                    })
+                } else {
+                    images.push({
+                        original: item.UrlImagen,
+                        thumbnail: item.UrlImagen,
+                    })
+                }
+            }
+
+           
         })
 
      
@@ -195,14 +185,16 @@ class PerfilSede extends Component {
 
     }
 
-    render() {
+ 
 
-        
-
-      
+    render() {    
 
         return (
+
+
             <div className="container-menu ">
+
+                <Metatags title={this.state.sede.Nombre} description={this.state.sede.Descripcion} url={window.location.href} image={"https://coaventurate.com/app-images/generales/logo_main.png" } />
                 <div id="content" >
                     <div className="table-responsive">
                         <Header iconMenuVisible="1" align="text-right" />
@@ -253,7 +245,7 @@ class PerfilSede extends Component {
                                             </Col>
                                             <Col sm={12} md={2}>
                                                 <Row className="font-weight-bold" >
-                                                    <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{this.state.btnIrMapa === "" ? "Ir al mapa" : this.state.btnIrMapa}</button>
+                                                    <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{this.props.t('Generales.IrMapa')}</button>
                                                 </Row>
 
                                             </Col>
@@ -264,18 +256,22 @@ class PerfilSede extends Component {
                                 <ListGroupItem>
                                          <Carousel>
                             {
-                                this.state.sede.ImagenesEmpresa.map((item, index) => {
+                                            this.state.sede.ImagenesEmpresa.map((item, index) => {
+                                             console.log(item)
+                                                    return (
+                                                       item.EsPrincipal ? <Carousel.Item className="item" key={index} >
+                                                            <img
+                                                                className="d-block w-100 rounded img-custom"
+                                                                src={item.UrlImagen}
+                                                                alt="slide"
 
-                                    return (
-                                        <Carousel.Item className="item" key={index} >
-                                            <img
-                                                className="d-block w-100 rounded img-custom"
-                                                src={item.UrlImagen}
-                                                alt="slide"
-                                            />
+                                                            />
 
-                                        </Carousel.Item>
-                                    );
+                                                        </Carousel.Item>:""
+                                                    );
+
+                                                
+                                    
                                 })
 
                             }
@@ -291,9 +287,9 @@ class PerfilSede extends Component {
                                 </Col>
                                 <Col sm={12} md={7}>
                                   
-                                                <Row className="text-justify " >
-                                                    {Parser(this.state.sede.Descripcion)}
-                                                </Row>
+                                <Row className="text-justify " >
+                                    {Parser( this.props.i18n.language === "en" ? this.state.sede.EnDescripcion : this.state.sede.Descripcion )}
+                                </Row>
                                 </Col>
 
                             </Row>
@@ -301,9 +297,9 @@ class PerfilSede extends Component {
                                 </ListGroupItem>    
                                 <ListGroupItem>
                                     <Tabs defaultActiveKey="info" variant="pills" transition={false} id="noanim-tab-example">
-                                        <Tab eventKey="info" title={this.state.lblInformacion === "" ? "Informacion" : this.state.lblInformacion} className="p-3">
-                                            <h5><u> {this.state.lblDetalle === "" ? "Detalles" : this.state.lblDetalle}</u></h5>
-                                                <ListGroup className="list-group-flush  ">
+                                        <Tab eventKey="info" title={ this.props.t('Sede.Informacion') } className="p-3">
+                                            <h5><u> {this.props.t('Sede.Detalles')}</u></h5>
+                                                <ListGroup className="list-group-flush">
                                                     <ListGroupItem>
                                                     <Row className="p-1 m-0">
                                                         <Col sm={12} md={6}>
@@ -323,7 +319,7 @@ class PerfilSede extends Component {
                                                     </Row>
                                                     </ListGroupItem>
                                             </ListGroup>
-                                            <h5><u>{this.state.lblContacto === "" ? "Datos de contacto" : this.state.lblContacto}</u></h5>
+                                            <h5><u>{this.props.t('Sede.Contacto')}</u></h5>
                                             <ListGroup className="list-group-flush  ">
                                                 <ListGroupItem>
                                                     {this.state.sede.Direccion !== "" ?
@@ -377,17 +373,7 @@ class PerfilSede extends Component {
                                                     </Row>
                                                     <Row className="p-2 m-0">
 
-                                                        {this.state.sede.InstagramUrl !== "" ?
-                                                            <Col sm={12} md={4}>
-                                                                <Row className="justify-content-md-center text-social ">
-                                                                    <Col sm={12} md={2} ><h4 className="no-margin-mobile"><i className="fa fa-instagram" aria-hidden="true" /></h4></Col>
-                                                                    <Col sm={12} md={10} ><a target="_blank" href={this.state.sede.InstagramUrl}> {this.state.sede.NombreInstagram}</a></Col>
-                                                                </Row>
-
-                                                            </Col>
-
-	                                                        : ""
-                                                        }
+                                                    
 
                                                         {this.state.sede.FacebookUrl !== "" ?
                                                             <Col sm={12} md={4}>
@@ -428,18 +414,17 @@ class PerfilSede extends Component {
                                                 </ListGroupItem>
                                             </ListGroup>
                                         </Tab>
-                                        <Tab eventKey="recom" title={this.state.lblTips === "" ? "Tips y recomendaciones" : this.state.lblTips}>
+                                        <Tab eventKey="recom" title={this.props.t('Sede.Tips')}>
                                             <ListGroup className="list-group-flush  ">
                                                 <ListGroupItem>
                                                     <Row className="p-3 m-0">
-                                                        <p> {this.state.sedeTips === "" ? this.state.sede.Tips : this.state.sedeTips}</p>
-                                                        <p>{Parser(this.state.sede.Tips)} </p>
+                                                        <p>{ Parser(this.props.i18n.language === "en" ? this.state.sede.EnTips : this.state.sede.Tips )} </p>
                                                     </Row>
                                                 </ListGroupItem>
                                             </ListGroup>
                                         </Tab>
 
-                                        <Tab eventKey="gal" title="Galería">
+                                        <Tab eventKey="gal" title={this.props.t('Sede.Galeria')}>
                                             <ListGroup className="list-group-flush  ">
                                                 <ListGroupItem>
                                                     <Row className="p-3 m-0">
@@ -457,18 +442,18 @@ class PerfilSede extends Component {
                             <Row className="p-3 m-0">
 
                                 <Col sm={12} md={6} className="mb-1">
-                                    <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{this.state.btnIrMapa === "" ? "Ir al mapa" : this.state.btnIrMapa}</button>
+                                    <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{this.props.t('Generales.IrMapa')}</button>
 
                                 </Col>
                                 <Col sm={12} md={6} className="mb-1">
 
-                                    <a target="_blank" href={"https://maps.google.com?q=" + this.state.sede.Latitud + "," + this.state.sede.Longitud} className="btn btn-default btn-3d-style  btn-block" >{this.state.btnLlegar === "" ? "Como llegar" : this.state.btnLlegar}</a>
+                                    <a target="_blank" href={"https://maps.google.com?q=" + this.state.sede.Latitud + "," + this.state.sede.Longitud} className="btn btn-default btn-3d-style  btn-block" >{this.props.t('Generales.Comollegar')}</a>
                                   
                                 </Col>
                             </Row>
                              <ListGroup>
-                                    <ListGroupItem >
-                                    <h5><u>Compartir</u></h5>
+                                <ListGroupItem >
+                                    <h5><u>{this.props.t('Sede.Compartir')}</u></h5>
 
 
                                     <div className="d-flex justify-content-center">
@@ -489,7 +474,17 @@ class PerfilSede extends Component {
 
                                                 <FacebookMessengerShareButton url={this.state.url} >
                                                     <FacebookMessengerIcon size={42} round={true} />
-                                                    </FacebookMessengerShareButton>
+                                                </FacebookMessengerShareButton>
+                                                <button className="react-share__ShareButton menu-button"  >
+                                                    <img
+                                                        src={inst}
+                                                        alt="slide"
+                                                        style={{ width: "35px" }}
+                                                    />
+                                                 
+
+                                                </button>
+                                               
                                             </div>
                                        </div>
                                     </div>
@@ -497,12 +492,12 @@ class PerfilSede extends Component {
                                 </ListGroupItem>
 
                                 <ListGroupItem >
-                                    <h5><u>Comentarios</u></h5>
+                                    <h5><u>{this.props.t('Sede.Comentar')}</u></h5>
                                     <div className="d-flex justify-content-center">
                                     <FacebookProvider appId="137904151817325">
                                         
-                                        <Comments href="https://www.facebook.com/Vincent-107918274843518" />
-                                       
+                                            <Comments href={"http://www.facebook.com/sharer.php?u=" + window.location.href} />
+
                                         </FacebookProvider>
                                     </div>
                                 </ListGroupItem>
@@ -544,4 +539,5 @@ const mapDispatchToProps = {
 };
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PerfilSede));
+const compo = withTranslation('common')(PerfilSede)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(compo));

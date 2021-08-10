@@ -5,6 +5,15 @@
 }
 
 
+.menu-button {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
 
     .menu-categoria div {
         color: #fefefe;

@@ -331,7 +331,8 @@ const libre = {
       body: JSON.stringify({
         q: text,
         source: from,
-        target: to
+          target: to,
+          model: "base"
       }),
       headers: { "Content-Type": "application/json" }
     }

@@ -147,10 +147,11 @@ namespace WebApp.Controllers
                             NombreTwitter = form["NombreTwitter"],
                             TwitterUrl = form["TwitterUrl"],
                             Pagina = form["Pagina"],
-                           
+                            EnDescripcion = form["EnDescripcion"],
+                            EnTips = form["EnTips"],
+                            EnAnexo = form["EnAnexo"]
 
-
-                        };
+                    };
 
                        
                         db.Sedes.Add(sede);
@@ -204,27 +205,19 @@ namespace WebApp.Controllers
                 vistaSede.Categorias = cat;
                 vistaSede.CategoriasSubcategorias= (from cs in catSub select ToVistaCategoriasSubcategorias(cs)).ToList();
 
-                
+
 
                 for (int i = 0; i < sede.ImagenesEmpresa.Count; i++)
                 {
-                    if (i == 0)
-                    {
-                        vistaSede.URLImagen1 = sede.ImagenesEmpresa.ElementAt(i).UrlImagen;
-                    }else if (i == 1){
-                        vistaSede.URLImagen2 = sede.ImagenesEmpresa.ElementAt(i).UrlImagen;
-                    }else if (i == 2){
-                        vistaSede.URLImagen3 = sede.ImagenesEmpresa.ElementAt(i).UrlImagen;
-                    }else if (i == 3)
-                    {
-                    vistaSede.URLImagen4 = sede.ImagenesEmpresa.ElementAt(i).UrlImagen;
-                
-                    }else if (i == 4)
-                        {
-                    vistaSede.URLImagen5 = sede.ImagenesEmpresa.ElementAt(i).UrlImagen;
-                        }
-        }
+                    var e = sede.ImagenesEmpresa.ElementAt(i);
 
+                    vistaSede.SetObjectProperty("URLImagen" + e.Orden, e.UrlImagen, vistaSede);
+
+                    vistaSede.SetObjectProperty("EsVideo" + e.Orden, e.EsVideo.ToString(), vistaSede);
+
+                    vistaSede.SetObjectProperty("EsPrincipal" + e.Orden, e.EsPrincipal.ToString(), vistaSede);
+
+                }
 
                 return Json(new Response { IsSuccess = true, Message = string.Empty, Result = vistaSede });
             }
@@ -295,6 +288,9 @@ namespace WebApp.Controllers
                     sede.NombreTwitter = form["NombreTwitter"];
                     sede.TwitterUrl = form["TwitterUrl"];
                     sede.Pagina = form["Pagina"];
+                    sede.EnDescripcion = form["EnDescripcion"];
+                    sede.EnTips = form["EnTips"];
+                    sede.EnAnexo = form["EnAnexo"];
                     db.Entry(sede).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     db.ImagenesEmpresa.RemoveRange(sede.ImagenesEmpresa);
@@ -313,51 +309,73 @@ namespace WebApp.Controllers
 
         }
 
-        private void InsertarImagenes(Dictionary<string, string> form, int idSede,bool esSede)
+      
+
+        private void InsertarImagenes(Dictionary<string, string> form, int IdSede)
         {
             if (form["URLImagen1"] != "" && form["URLImagen1"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen1"] });
-
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen1"], EsPrincipal = true, Orden = 1 });
             }
 
             if (form["URLImagen2"] != "" && form["URLImagen2"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen2"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen2"], EsPrincipal = true, Orden = 2 });
             }
 
             if (form["URLImagen3"] != "" && form["URLImagen3"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen3"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen3"], EsVideo = false, EsPrincipal = true, Orden = 3 });
             }
-
             if (form["URLImagen4"] != "" && form["URLImagen4"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen4"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen4"], EsVideo = false, EsPrincipal = true, Orden = 4 });
             }
 
             if (form["URLImagen5"] != "" && form["URLImagen5"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen5"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen5"], EsVideo = false, EsPrincipal = true, Orden = 5 });
             }
+
             if (form["URLImagen6"] != "" && form["URLImagen6"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen6"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen6"], EsVideo = bool.Parse(form["EsVideo6"]), EsPrincipal = false, Orden = 6 });
             }
 
             if (form["URLImagen7"] != "" && form["URLImagen7"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen7"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen7"], EsVideo = bool.Parse(form["EsVideo7"]), EsPrincipal = false, Orden = 7 });
             }
 
             if (form["URLImagen8"] != "" && form["URLImagen8"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen8"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen8"], EsVideo = bool.Parse(form["EsVideo8"]), EsPrincipal = false, Orden = 8 });
             }
             if (form["URLImagen9"] != "" && form["URLImagen9"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = idSede, UrlImagen = form["URLImagen9"] });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen9"], EsVideo = bool.Parse(form["EsVideo9"]), EsPrincipal = false, Orden = 9 });
             }
+            if (form["URLImagen10"] != "" && form["URLImagen10"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen10"], EsVideo = bool.Parse(form["EsVideo10"]), EsPrincipal = false, Orden = 10 });
+            }
+            if (form["URLImagen11"] != "" && form["URLImagen11"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen11"], EsVideo = bool.Parse(form["EsVideo11"]), EsPrincipal = false, Orden = 11 });
+            }
+            if (form["URLImagen12"] != "" && form["URLImagen12"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen12"], EsVideo = bool.Parse(form["EsVideo12"]), EsPrincipal = false, Orden = 12 });
+            }
+            if (form["URLImagen13"] != "" && form["URLImagen13"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen13"], EsVideo = bool.Parse(form["EsVideo13"]), EsPrincipal = false, Orden = 13 });
+            }
+            if (form["URLImagen14"] != "" && form["URLImagen14"] != "null")
+            {
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen14"], EsVideo = bool.Parse(form["EsVideo14"]), EsPrincipal = false, Orden = 14 });
+            }
+
         }
 
         private VistaSede ToVistaSede(Sedes sede)
@@ -396,7 +414,9 @@ namespace WebApp.Controllers
                  NombreTwitter = sede.NombreTwitter,
                  Correo = sede.Correo,
                  Pagina = sede.Pagina,
-                     
+                 EnAnexo = sede.EnAnexo,
+                 EnDescripcion = sede.EnDescripcion,
+                 EnTips = sede.EnTips
 
             };
         }

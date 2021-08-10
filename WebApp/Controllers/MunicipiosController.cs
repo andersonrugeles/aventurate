@@ -77,9 +77,13 @@ namespace WebApp.Controllers
                             Longitud = form["Longitud"],
                             Festividades = form["Festividades"],
                             QueHacer = form["QueHacer"],
-                            Tips = form["Tips"]
+                            Tips = form["Tips"],
+                            EnFestividades = form["EnFestividades"],
+                            EnQueHacer = form["EnQueHacer"],
+                            EnTips = form["EnTips"],
+                            EnDescripcion = form["EnDescripcion"],
 
-                    };
+                        };
 
 
                         db.Municipios.Add(municipio);
@@ -123,31 +127,18 @@ namespace WebApp.Controllers
                
 
                 var vistaMunicipio = ToVistaMunicipio(municipio);
-          
 
-                for (int i = 0; i < municipio.ImagenesMunicipio.Count; i++)
+
+                for(int i = 0; i < municipio.ImagenesMunicipio.Count; i++)
                 {
-                    if (i == 0)
-                    {
-                        vistaMunicipio.URLImagen1 = municipio.ImagenesMunicipio.ElementAt(i).UrlImagen;
-                    }
-                    else if (i == 1)
-                    {
-                        vistaMunicipio.URLImagen2 = municipio.ImagenesMunicipio.ElementAt(i).UrlImagen;
-                    }
-                    else if (i == 2)
-                    {
-                        vistaMunicipio.URLImagen3 = municipio.ImagenesMunicipio.ElementAt(i).UrlImagen;
-                    }
-                    else if (i == 3)
-                    {
-                        vistaMunicipio.URLImagen4 = municipio.ImagenesMunicipio.ElementAt(i).UrlImagen;
+                    var e = municipio.ImagenesMunicipio.ElementAt(i);
 
-                    }
-                    else if (i == 4)
-                    {
-                        vistaMunicipio.URLImagen5 = municipio.ImagenesMunicipio.ElementAt(i).UrlImagen;
-                    }
+                    vistaMunicipio.SetObjectProperty("URLImagen" + e.Orden,  e.UrlImagen, vistaMunicipio);
+
+                    vistaMunicipio.SetObjectProperty("EsVideo" + e.Orden,  e.EsVideo.ToString(), vistaMunicipio);
+
+                    vistaMunicipio.SetObjectProperty("EsPrincipal" + e.Orden, e.EsPrincipal.ToString(), vistaMunicipio);
+
                 }
 
 
@@ -172,9 +163,13 @@ namespace WebApp.Controllers
                 Nombre = municipio.Nombre,
                 UrlImagen = municipio.UrlImagen,
                 QueHacer = municipio.QueHacer,
-                Tips = municipio.Tips
-              
-            };
+                Tips = municipio.Tips,
+                EnFestividades = municipio.EnFestividades,
+                EnQueHacer = municipio.EnQueHacer,
+                EnTips = municipio.EnTips,
+                EnDescripcion = municipio.EnDescripcion
+
+        };
         }
 
         [HttpPost, DisableRequestSizeLimit]
@@ -222,6 +217,11 @@ namespace WebApp.Controllers
                     municipio.Festividades = form["Festividades"];
                     municipio.QueHacer = form["QueHacer"];
                     municipio.Tips = form["Tips"];
+                    municipio.EnFestividades = form["EnFestividades"];
+                    municipio.EnQueHacer = form["EnQueHacer"];
+                    municipio.EnTips = form["EnTips"];
+                    municipio.EnDescripcion = form["EnDescripcion"];
+
                     db.Entry(municipio).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     db.ImagenesMunicipio.RemoveRange(municipio.ImagenesMunicipio);
@@ -244,26 +244,65 @@ namespace WebApp.Controllers
         {
             if (form["URLImagen1"] != "" && form["URLImagen1"] != "null")
             {
-                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen1"] });
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen1"] ,EsPrincipal = true,Orden = 1});
             }
 
             if (form["URLImagen2"] != "" && form["URLImagen2"] != "null")
             {
-                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen2"] });
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen2"], EsPrincipal = true, Orden =2});
             }
 
             if (form["URLImagen3"] != "" && form["URLImagen3"] != "null")
             {
-                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen3"] });
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen3"], EsVideo = false, EsPrincipal = true, Orden = 3});
             }
             if (form["URLImagen4"] != "" && form["URLImagen4"] != "null")
             {
-                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen4"] });
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen4"], EsVideo = false, EsPrincipal = true, Orden = 4 });
             }
 
             if (form["URLImagen5"] != "" && form["URLImagen5"] != "null")
             {
-                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen5"] });
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen5"],EsVideo=false, EsPrincipal = true, Orden = 5 });
+            }
+
+            if (form["URLImagen6"] != "" && form["URLImagen6"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen6"], EsVideo = bool.Parse(form["EsVideo6"]), EsPrincipal = false, Orden = 6 });
+            }
+
+            if (form["URLImagen7"] != "" && form["URLImagen7"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen7"], EsVideo = bool.Parse(form["EsVideo7"]), EsPrincipal = false, Orden = 7 });
+            }
+
+            if (form["URLImagen8"] != "" && form["URLImagen8"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen8"], EsVideo = bool.Parse(form["EsVideo8"]), EsPrincipal = false, Orden = 8 });
+            }
+            if (form["URLImagen9"] != "" && form["URLImagen9"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen9"], EsVideo = bool.Parse(form["EsVideo9"]), EsPrincipal = false, Orden = 9});
+            }
+            if (form["URLImagen10"] != "" && form["URLImagen10"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen10"], EsVideo = bool.Parse(form["EsVideo10"]), EsPrincipal = false, Orden = 10 });
+            }
+            if (form["URLImagen11"] != "" && form["URLImagen11"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen11"], EsVideo = bool.Parse(form["EsVideo11"]), EsPrincipal = false, Orden = 11 });
+            }
+            if (form["URLImagen12"] != "" && form["URLImagen12"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen12"], EsVideo = bool.Parse(form["EsVideo12"]), EsPrincipal = false, Orden = 12 });
+            }
+            if (form["URLImagen13"] != "" && form["URLImagen13"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen13"], EsVideo = bool.Parse(form["EsVideo13"]), EsPrincipal = false, Orden = 13 });
+            }
+            if (form["URLImagen14"] != "" && form["URLImagen14"] != "null")
+            {
+                db.ImagenesMunicipio.Add(new ImagenesMunicipio { IdMunicipio = IdMunicipio, UrlImagen = form["URLImagen14"], EsVideo = bool.Parse(form["EsVideo14"]), EsPrincipal = false, Orden = 14 });
             }
 
         }

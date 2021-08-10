@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4qrXI2VO7s0dEZMcfCNpCglesT3Xl7ZxpQSqZ14Zhf7vkw795ixnSiNDwk9Ue1d+PvBHHSKxl8ptXp80hPuoHQ==",
+  "dgSpecHash": "3Zg8FWlGGy/QG49oudAt/avPCkFu2qdPDwzYUOAdH91RnbEp6R7wwU1TYTITorq0mwXVEjcpKEFEMUF/OOO3gQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vrc-8\\Source\\Repos\\coaventurate\\Models\\Models.csproj",
+  "projectFilePath": "C:\\Users\\vrc-8\\Source\\repos\\coaventurate\\Models\\Models.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vrc-8\\.nuget\\packages\\efcore.shaman\\1.0.18351.81\\efcore.shaman.1.0.18351.81.nupkg.sha512",
     "C:\\Users\\vrc-8\\.nuget\\packages\\jetbrains.annotations\\2018.2.1\\jetbrains.annotations.2018.2.1.nupkg.sha512",

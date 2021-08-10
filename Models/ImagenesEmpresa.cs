@@ -27,6 +27,15 @@ namespace Models
         [Display(Name = "EsVideo")]
         [JsonProperty(PropertyName = "EsVideo")]
         public bool EsVideo { get; set; }
+        [JsonProperty(PropertyName = "Orden")]
+        [Display(Name = "Orden")]
+        [Required(ErrorMessage = "El dato {0} es necesario")]
+        public int? Orden { get; set; }
+
+
+        [Display(Name = "EsPrincipal")]
+        [JsonProperty(PropertyName = "EsPrincipal")]
+        public bool EsPrincipal { get; set; }
 
         [JsonIgnore]
         public virtual Sedes Sede { get; set; }

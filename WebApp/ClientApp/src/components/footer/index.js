@@ -2,7 +2,7 @@
 import './style.css';
 import {  Row, Col } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import translate from "../helpers/translate";
+import { withTranslation } from "react-i18next";
 
 class Footer extends Component {
 
@@ -14,27 +14,13 @@ class Footer extends Component {
             lblPolitica: '',
         };
 
-        this.traducir = this.traducir.bind(this);
+   
     }
 
     componentDidMount() {
-        this.traducir();
+       
     }
-    async traducir() {
-        if (localStorage.getItem('lenguaje') === 'español') {
-            this.setState({
-                lblTermino: await translate('Términos y Condiciones', { to: "es", engine: "libre" }),
-                lblPolitica: await translate('Políticas de Privacidad', { to: "es", engine: "libre" })
-            });
 
-
-        } else if (localStorage.getItem('lenguaje') === 'ingles') {
-            this.setState({
-                lblTermino: await translate('Términos y Condiciones', { to: "en", engine: "libre" }),
-                lblPolitica: await translate('Políticas de Privacidad', { to: "en", engine: "libre" })
-            });
-        }
-    }
     render() {
       
         return (
@@ -43,8 +29,8 @@ class Footer extends Component {
                     <Col sm={12} md={8} className="pr-0">
                         <ul className="footernav">
 
-                            <li>   <Link to="/terminos_condiciones"  >{this.state.lblTermino === "" ? "Términos y Condiciones" : this.state.lblTermino}</Link></li>
-                            <li> <Link to="/politicas_privacidad"  >{this.state.lblPolitica === "" ? "Políticas de Privacidad" : this.state.lblPolitica}</Link> </li>
+                            <li>   <Link to="/terminos_condiciones"  >{this.props.t('Index.TerminoCondiciones')}</Link></li>
+                            <li> <Link to="/politicas_privacidad"  >{this.props.t('Index.PoliticasPrivacidad')}</Link> </li>
 
                         </ul>
 
@@ -62,4 +48,4 @@ class Footer extends Component {
     }
 }
 
-export default Footer;
+export default withTranslation('common')(Footer);

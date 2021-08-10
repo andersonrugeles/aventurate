@@ -29,9 +29,17 @@ namespace Models
         [JsonProperty(PropertyName = "Descripcion")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "El dato {0} es necesario")]
+        [Display(Name = "EnDescripcion")]
+        [JsonProperty(PropertyName = "EnDescripcion")]
+        public string EnDescripcion { get; set; }
+        [Required(ErrorMessage = "El dato {0} es necesario")]
         [Display(Name = "Festividades")]
         [JsonProperty(PropertyName = "Festividades")]
         public string Festividades { get; set; }
+        [Required(ErrorMessage = "El dato {0} es necesario")]
+        [Display(Name = "EnFestividades")]
+        [JsonProperty(PropertyName = "EnFestividades")]
+        public string EnFestividades { get; set; }
         [Required(ErrorMessage = "El dato {0} es necesario")]
         [Display(Name = "Latitud")]
         [JsonProperty(PropertyName = "Latitud")]
@@ -47,10 +55,16 @@ namespace Models
         [Display(Name = "Tips")]
         [JsonProperty(PropertyName = "Tips")]
         public string Tips { get; set; }
+        [Display(Name = "EnTips")]
+        [JsonProperty(PropertyName = "EnTips")]
+        public string EnTips { get; set; }
 
         [Display(Name = "QueHacer")]
         [JsonProperty(PropertyName = "QueHacer")]
         public string QueHacer { get; set; }
+        [Display(Name = "EnQueHacer")]
+        [JsonProperty(PropertyName = "EnQueHacer")]
+        public string EnQueHacer { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<Sedes> Sedes { get; set; }

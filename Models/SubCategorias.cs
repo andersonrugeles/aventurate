@@ -19,6 +19,11 @@ namespace Models
         [JsonProperty(PropertyName = "Nombre")]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "El dato {0} es necesario")]
+        [MaxLength(30, ErrorMessage = "El tamaño maximo de el {0} is {1} caracteres")]
+        [Display(Name = "EnNombre")]
+        [JsonProperty(PropertyName = "EnNombre")]
+        public string EnNombre { get; set; }
+        [Required(ErrorMessage = "El dato {0} es necesario")]
         [Display(Name = "UrlImagen")]
         [JsonProperty(PropertyName = "UrlImagen")]
         public string UrlImagen { get; set; }

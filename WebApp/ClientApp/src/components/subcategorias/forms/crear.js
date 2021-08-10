@@ -18,6 +18,7 @@ class CrearSubCategoria extends Component {
             subcategoria: {
                 IdSubCategoria: 0,
                 Nombre: '',
+                EnNombre: '',
                 UrlImagen: '',
                 
             },
@@ -56,12 +57,16 @@ class CrearSubCategoria extends Component {
             this.props.showMessage('Debe ingresar una nombre.', true, 'Información');
             return;
          
-        } else if (file == null || file.get("Imagen") == null) {
+       } else if (!subcategoria.EnNombre) {
+           this.props.showMessage('Debe ingresar una nombre en ingles', true, 'Información');
+           return;
+       }else if (file == null || file.get("Imagen") == null) {
             this.props.showMessage('Debe seleccionar una imagén', true, 'Información');
             return;
         }
 
-       file.append('Nombre', subcategoria.Nombre);
+        file.append('Nombre', subcategoria.Nombre);
+        file.append('EnNombre', subcategoria.EnNombre);
        await this.props.crear_subcategoria(file, this);
 
        this.props.ver_crear_subcategoria(false);
@@ -110,6 +115,13 @@ class CrearSubCategoria extends Component {
                         <Form.Row sm={10}>
                             <Form.Group as={Col} >
                                 <Form.Control type="text" name="Nombre" value={subcategoria.Nombre} maxLength={15} className="pz-input" onChange={this.InputChange} placeholder="Nombre" />
+                            </Form.Group>
+                        </Form.Row>
+
+
+                        <Form.Row sm={10}>
+                            <Form.Group as={Col} >
+                                <Form.Control type="text" name="EnNombre" value={subcategoria.EnNombre} maxLength={15} className="pz-input" onChange={this.InputChange} placeholder="Nombre en ingles" />
                             </Form.Group>
                         </Form.Row>
 

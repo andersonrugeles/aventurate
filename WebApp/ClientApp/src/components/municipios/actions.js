@@ -169,7 +169,7 @@ function editar_municipio(municipio, context) {
                     } else {
                         loader.hide();
                         dispatch(success(false));
-                        dispatch(alertActions.showMessage( response.message, true, 'Ups'));
+                        dispatch(alertActions.showMessage(response.Message, true, 'Ups'));
                     }
                 },
                 error => {

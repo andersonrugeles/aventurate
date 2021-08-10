@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\vrc-8\\Source\\Repos\\coaventurate\\Models\\Models.csproj": {}
+    "C:\\Users\\vrc-8\\Source\\repos\\coaventurate\\Models\\Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\vrc-8\\Source\\Repos\\coaventurate\\Models\\Models.csproj": {
+    "C:\\Users\\vrc-8\\Source\\repos\\coaventurate\\Models\\Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\vrc-8\\Source\\Repos\\coaventurate\\Models\\Models.csproj",
+        "projectUniqueName": "C:\\Users\\vrc-8\\Source\\repos\\coaventurate\\Models\\Models.csproj",
         "projectName": "Models",
-        "projectPath": "C:\\Users\\vrc-8\\Source\\Repos\\coaventurate\\Models\\Models.csproj",
+        "projectPath": "C:\\Users\\vrc-8\\Source\\repos\\coaventurate\\Models\\Models.csproj",
         "packagesPath": "C:\\Users\\vrc-8\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\vrc-8\\Source\\Repos\\coaventurate\\Models\\obj\\",
+        "outputPath": "C:\\Users\\vrc-8\\Source\\repos\\coaventurate\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",

@@ -23,11 +23,16 @@ namespace Models
         [Display(Name = "Descripcion")]
         [JsonProperty(PropertyName = "Descripcion")]
         public string Descripcion { get; set; }
+        [Display(Name = "EnDescripcion")]
+        [JsonProperty(PropertyName = "EnDescripcion")]
+        public string EnDescripcion { get; set; }
         [Required(ErrorMessage = "El dato {0} es necesario")]
         [Display(Name = "Anexo")]
         [JsonProperty(PropertyName = "Anexo")]
         public string Anexo { get; set; }
-
+        [Display(Name = "EnAnexo")]
+        [JsonProperty(PropertyName = "EnAnexo")]
+        public string EnAnexo { get; set; }
         [Required(ErrorMessage = "El dato {0} es necesario")]
         [MaxLength(12, ErrorMessage = "El tamaño maximo de el {0} is {1} caracteres")]
         [Display(Name = "Telefono")]
@@ -87,6 +92,9 @@ namespace Models
         [Display(Name = "Tips")]
         [JsonProperty(PropertyName = "Tips")]
         public string Tips { get; set; }
+        [Display(Name = "EnTips")]
+        [JsonProperty(PropertyName = "EnTips")]
+        public string EnTips { get; set; }
         [Display(Name = "Pagina")]
         [JsonProperty(PropertyName = "Pagina")]
         public string Pagina { get; set; }

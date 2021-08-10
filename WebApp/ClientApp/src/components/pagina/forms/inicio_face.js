@@ -61,13 +61,18 @@ class InicioSesion extends Component {
         } else if (file == null || file.get("Imagen") == null) {
             this.props.showMessage('Debe seleccionar una imagén', true, 'Información');
             return;
-        } else if (!categoria.Orden === 0) {
+        } else if (!categoria.EnNombre) {
+            this.props.showMessage('Debe ingresar una nombre en ingles.', true, 'Información');
+            return;
+
+        }else if (!categoria.Orden === 0) {
             this.props.showMessage('Debe ingresar un un numero de ordén.', true, 'Información');
             return;
 
         }
 
         file.append('Nombre', categoria.Nombre);
+        file.append('EnNombre', categoria.EnNombre);
         file.append('Orden', categoria.Orden);
         this.props.crear_categoria(file, this);
         this.props.ver_crear_categoria(false);

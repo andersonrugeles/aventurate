@@ -18,10 +18,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import Header from '../header/index';
 import Footer from '../footer/index';
 import { HeaderActions } from '../header/actions';
-import translate from "../helpers/translate";
 import { Link } from "react-router-dom";
-
 import Facebook from '../pagina/forms/inicio_face';
+import { withTranslation } from "react-i18next";
+
 
 class MapView extends Component {
 
@@ -37,7 +37,7 @@ class MapView extends Component {
         this.resetHighlight = this.resetHighlight.bind(this);
         this.highlightFeature = this.highlightFeature.bind(this);
         this.onMapLoad = this.onMapLoad.bind(this);
-        this.traducir = this.traducir.bind(this);
+       
         
         this.state = {
             layerSeleccionado: null,
@@ -58,7 +58,7 @@ class MapView extends Component {
                 dashArray: ' ',
                 fillColor: ' '
             },
-            lblDescripcion:''
+          
        
         }
 
@@ -86,7 +86,6 @@ class MapView extends Component {
         loader.show();
         window.scrollTo(0, 0);
         //this.obtenerUbicacion();
-        this.traducir();
         
        
     }
@@ -190,21 +189,7 @@ class MapView extends Component {
 
       
     }
-    async traducir() {
-        loader.show();
-        if (localStorage.getItem('lenguaje') === 'español') {
-            this.setState({
-                lblDescripcion: await translate('El mapa tiene un filtro en el cual vas a poder seleccionar lo que estés buscando (hoteles, restaurantes, zonas de camping, rutas, museos, actividades a realizar…), y dependiendo a lo seleccionado se marcaran los puntos en el mapa, donde te indicara que en ese lugar puedes encontrar lo que estás buscando, solo tienes que darle clic al municipio que desees ir, o puedes darle directamente al punto que el mapa te indique. Y de esa forma podrás entrar y consultar la información que necesites para que vivas la mejor experiencia.', { to: "es", engine: "libre" }),
-            });
-
-
-        } else if (localStorage.getItem('lenguaje') === 'ingles') {
-            this.setState({
-                lblDescripcion: await translate('El mapa tiene un filtro en el cual vas a poder seleccionar lo que estés buscando (hoteles, restaurantes, zonas de camping, rutas, museos, actividades a realizar…), y dependiendo a lo seleccionado se marcaran los puntos en el mapa, donde te indicara que en ese lugar puedes encontrar lo que estás buscando, solo tienes que darle clic al municipio que desees ir, o puedes darle directamente al punto que el mapa te indique. Y de esa forma podrás entrar y consultar la información que necesites para que vivas la mejor experiencia.', { to: "en", engine: "libre" }),
-            });
-        }
-        loader.hide();
-    }
+  
 
     onMapLoad(e) {
        
@@ -267,9 +252,7 @@ class MapView extends Component {
                                 </h6>
                         </ListGroupItem>
                         <ListGroupItem>
-                       
-                            {prop.Anexo}
-                       
+                            {this.props.i18n.language === "en" ? prop.EnAnexo : prop.Anexo}
                         </ListGroupItem>
 
                         <ListGroupItem>
@@ -330,7 +313,7 @@ class MapView extends Component {
                                                         style={{ height: 'auto !important' }}
                                                         className="d-block w-100 rounded-top"
                                                         src={item.UrlImagen}
-                                                        alt="First slide"
+                                                        alt=" "
                                                     />
 
                                                 </Carousel.Item>
@@ -390,15 +373,14 @@ class MapView extends Component {
                             <ListGroup className="list-group-flush  ">
                                 <ListGroupItem className="list-group-flush mb-3 ">
                                    
-                                    <h6 className="text-justify "> El mapa tiene un filtro en el cual vas a poder seleccionar lo que estés buscando (hoteles, restaurantes, zonas de camping, rutas, museos, actividades a realizar…), y dependiendo a lo seleccionado se marcaran los puntos en el mapa, donde te indicara que en ese lugar puedes encontrar lo que estás buscando, solo tienes que darle clic al municipio que desees ir, o puedes darle directamente al punto que el mapa te indique. Y de esa forma podrás entrar y consultar la información que necesites para que vivas la mejor experiencia.</h6>
-
-                                    <p className="text-justify "> <h6>{this.state.lblDescripcion === "" ? "El mapa tiene un filtro en el cual vas a poder seleccionar lo que estés buscando (hoteles, restaurantes, zonas de camping, rutas, museos, actividades a realizar…), y dependiendo a lo seleccionado se marcaran los puntos en el mapa, donde te indicara que en ese lugar puedes encontrar lo que estás buscando, solo tienes que darle clic al municipio que desees ir, o puedes darle directamente al punto que el mapa te indique. Y de esa forma podrás entrar y consultar la información que necesites para que vivas la mejor experiencia." : this.state.lblDescripcion}</h6></p>
+                                   
+                                    <h6 className="text-justify ">{this.props.t('Index.Descripcion')}</h6>
 
 
                                 </ListGroupItem>
                             </ListGroup>
                             <div className="municipio-select2">
-                                <p className="municipio-select">{this.props.municipio === null ? "Principal" : this.props.municipio.Nombre}</p>
+                                <p className="municipio-select">{ }</p>
                             </div>
                             <MenuFiltro />
                            
@@ -554,6 +536,7 @@ const mapDispatchToProps = {
 
 
 
+const compo = withTranslation('common')(MapView)
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MapView));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(compo));
 

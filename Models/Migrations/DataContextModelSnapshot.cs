@@ -25,6 +25,10 @@ namespace Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("EnNombre")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(30);
@@ -88,9 +92,14 @@ namespace Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("EsPrincipal");
+
                     b.Property<bool>("EsVideo");
 
                     b.Property<int>("IdSede");
+
+                    b.Property<int?>("Orden")
+                        .IsRequired();
 
                     b.Property<string>("UrlImagen")
                         .IsRequired();
@@ -108,7 +117,14 @@ namespace Models.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("EsPrincipal");
+
+                    b.Property<bool>("EsVideo");
+
                     b.Property<int>("IdMunicipio");
+
+                    b.Property<int?>("Orden")
+                        .IsRequired();
 
                     b.Property<string>("UrlImagen")
                         .IsRequired();
@@ -130,6 +146,16 @@ namespace Models.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired();
+
+                    b.Property<string>("EnDescripcion")
+                        .IsRequired();
+
+                    b.Property<string>("EnFestividades")
+                        .IsRequired();
+
+                    b.Property<string>("EnQueHacer");
+
+                    b.Property<string>("EnTips");
 
                     b.Property<string>("Festividades")
                         .IsRequired();
@@ -197,6 +223,12 @@ namespace Models.Migrations
                     b.Property<string>("Direccion")
                         .IsRequired();
 
+                    b.Property<string>("EnAnexo");
+
+                    b.Property<string>("EnDescripcion");
+
+                    b.Property<string>("EnTips");
+
                     b.Property<string>("FacebookUrl");
 
                     b.Property<DateTime>("FechaRegistro");
@@ -261,6 +293,10 @@ namespace Models.Migrations
                     b.Property<int>("IdSubCategoria")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EnNombre")
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("Nombre")
                         .IsRequired()

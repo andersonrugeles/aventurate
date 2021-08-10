@@ -198,7 +198,8 @@ class SubCategoria extends Component {
 
                             <ColumnDirective field="UrlImagen" headerText="Imagen" template="<img style='width:32px;heigth:32px' class='tempimg'>" width="120"   textAlign="Right"></ColumnDirective>
                             <ColumnDirective field='Nombre' headerText='Nombre'  width='150'></ColumnDirective>
-                           
+                            <ColumnDirective field='EnNombre' headerText='EnNombre' width='150'></ColumnDirective>
+
                         </ColumnsDirective>
                         <Inject services={[Search, Toolbar]} />
                     </GridComponent>

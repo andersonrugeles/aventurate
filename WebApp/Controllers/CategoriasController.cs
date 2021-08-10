@@ -77,6 +77,7 @@ namespace WebApp.Controllers
                         var categoria = new Categorias
                         {
                             Nombre = form["Nombre"],
+                            EnNombre = form["EnNombre"],
                             UrlImagen = "categorias/" + FileName,
                             Orden = int.Parse( form["Orden"])
 
@@ -133,6 +134,7 @@ namespace WebApp.Controllers
             var ruta = Path.Combine(Directory.GetCurrentDirectory(), "images/categorias");
             var form = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
             var Nombre = form["Nombre"];
+            var EnNombre = form["EnNombre"];
             var Id = int.Parse( form["IdCategoria"]);
             var UrlImagen = form["UrlImagen"];
             bool archivoBorrado = false;
@@ -164,6 +166,7 @@ namespace WebApp.Controllers
 
                     categoria.Orden = int.Parse(form["Orden"]);
                     categoria.Nombre = form["Nombre"];
+                    categoria.EnNombre = form["EnNombre"];
                     db.Entry(categoria).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     transacction.Commit();

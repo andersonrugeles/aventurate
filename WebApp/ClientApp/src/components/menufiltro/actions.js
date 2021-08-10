@@ -106,9 +106,9 @@ function asignar_menu_filtro_active(itemActiveClass) {
 }
 
 function obtener_subcategorias(IdCategoria,context) {
-    return dispatch => {
+    return async dispatch => {
 
-        ServicesHelper.obtener_subcategorias(IdCategoria)
+        await ServicesHelper.obtener_subcategorias(IdCategoria)
             .then(
                 response => {
                     loader.hide();
