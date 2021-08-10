@@ -83,4 +83,6 @@
     </ItemGroup>
   </Target>
 
+  <ProjectExtensions><VisualStudio><UserProperties clientapp_4src_4translations_4en_4common_1json__JsonSchema="ut" /></VisualStudio></ProjectExtensions>
+
 </Project>

@@ -109,6 +109,7 @@ class FiltroSubCategorias extends Component {
     render() {
 
         const { categoriasSubcategorias } = this.props;
+        console.log(categoriasSubcategorias)
 
         return (
             <Modal
@@ -129,13 +130,14 @@ class FiltroSubCategorias extends Component {
                         <ListGroup.Item  >
                             <FormControlLabel
                                 control={<Checkbox id={`item-f-0`} checked={this.state.selected} onChange={(e, data) => this.FiltroChangeHandler({ IdCategoriaSubcategoria: 0 }, data)} icon={<RoomOutlinedIcon fontSize="large" style={{ fill: "#97BF13" }} />} checkedIcon={<RoomIcon fontSize="large" style={{ fill: "#97BF13" }} />} />}
-                                label={<span >{this.state.lblText1 === "" ? "Seleccionar Todos" : this.state.lblText1}</span>}
+                                label={<span >{this.props.t('Generales.Seleccionar')}</span>}
 
                             />
                         </ListGroup.Item>
 
                         {
                             categoriasSubcategorias.map((menuItem) => (
+                             
                                 <ListGroup.Item key={menuItem.IdCategoriaSubcategoria} >
                                     <FormControlLabel
                                         control={<Checkbox id={`item-f-${menuItem.IdCategoriaSubcategoria}`} checked={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoriaSubcategoria === menuItem.IdCategoriaSubcategoria)} onChange={(e, data) => this.FiltroChangeHandler(menuItem, data)} icon={<RoomOutlinedIcon fontSize="large" style={{ fill: "#97BF13" }} />} checkedIcon={<RoomIcon fontSize="large" style={{ fill: "#97BF13" }} />}  />}

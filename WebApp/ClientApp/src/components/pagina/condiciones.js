@@ -7,18 +7,11 @@ import { connect } from 'react-redux';
 import { HeaderActions } from '../header/actions';
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-
+import Parser from 'html-react-parser';
 
 
 class Condiciones extends Component {
-    constructor(props) {
-        super(props);
-        
-       
-
-
-
-    }
+  
     componentDidMount() {
         loader.hide();
         window.scrollTo(0, 0);
@@ -52,18 +45,18 @@ class Condiciones extends Component {
                                             <ListGroup className="list-group-flush  ">
                                                
                                                 <ListGroupItem>
-                                                    <h5><b> {this.props.t('TerminosCondiciones.Titulo1')}</b> </h5>
+                                                    <h5><b> {Parser(this.props.t('TerminosCondiciones.Titulo1'))}</b> </h5>
 
-                                                    <p className="text-justify ">{this.props.t('TerminosCondiciones.Descripcion1')}</p>
-
-
-
-                                                    <h5><b>{this.props.t('TerminosCondiciones.Titulo2')}</b> </h5>
-                                                    <p className="text-justify ">{this.props.t('TerminosCondiciones.Descripcion2')}</p>
+                                                    <p className="text-justify ">{Parser(this.props.t('TerminosCondiciones.Descripcion1'))}</p>
 
 
-                                                    <h5><b>{this.props.t('TerminosCondiciones.Titulo3')}</b> </h5>
-                                                    <p className="text-justify ">{this.props.t('TerminosCondiciones.Descripcion4')}</p>
+
+                                                    <h5><b>{Parser(this.props.t('TerminosCondiciones.Titulo2'))}</b> </h5>
+                                                    <p className="text-justify ">{Parser(this.props.t('TerminosCondiciones.Descripcion2'))}</p>
+
+
+                                                    <h5><b>{Parser(this.props.t('TerminosCondiciones.Titulo3'))}</b> </h5>
+                                                    <p className="text-justify ">{Parser(this.props.t('TerminosCondiciones.Descripcion4'))}</p>
  
                                                 </ListGroupItem>
                                                

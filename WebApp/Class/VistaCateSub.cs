@@ -11,5 +11,7 @@ namespace WebApp.Class
         public int IdCategoria { get; set; }
 
         public int IdSubCategoria { get; set; }
+
+
     }
 }

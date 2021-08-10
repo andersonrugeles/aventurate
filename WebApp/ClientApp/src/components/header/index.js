@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import Spain from '../../img/generales/espana.png';
 import English from '../../img/generales/eeuu.png';
 import { withTranslation } from "react-i18next";
-
+import Parser from 'html-react-parser';
 
 
 class Header extends Component {

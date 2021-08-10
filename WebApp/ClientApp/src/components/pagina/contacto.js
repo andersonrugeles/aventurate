@@ -8,7 +8,7 @@ import { HeaderActions } from '../header/actions';
 import { withRouter } from "react-router-dom";
 import { usuarioActions } from '../users/actions';
 import { withTranslation } from "react-i18next";
-
+import Parser from 'html-react-parser';
 
 class Contacto extends Component {
 
@@ -80,8 +80,8 @@ class Contacto extends Component {
 
                             <ListGroup className="list-group-flush  ">
                                 <ListGroupItem>
-                                    <p className="text-justify ">{this.props.t('Contacto.Descripcion1')} </p>
-                                    <p className="text-justify ">{this.props.t('Contacto.Descripcion2')}  </p>
+                                    <p className="text-justify ">{Parser(this.props.t('Contacto.Descripcion1'))} </p>
+                                    <p className="text-justify ">{Parser(this.props.t('Contacto.Descripcion2'))}  </p>
                                 </ListGroupItem>
 
                                 <ListGroupItem>

@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { HeaderActions } from '../header/actions';
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
+import Parser from 'html-react-parser';
 
 class QuienesSomos extends Component {
 
@@ -72,7 +73,7 @@ class QuienesSomos extends Component {
                                         <Col className="justify-content-center pr-0" sm={12} md={8} >
                                             <ListGroup className="list-group-flush  ">
                                                 <ListGroupItem>
-                                                    <p className="text-justify "><h6><strong>Aventúrate </strong>{this.props.t('QuienesSomos.Descripcion')}</h6></p>
+                                                    <p className="text-justify "><h6><strong>Aventúrate </strong>{Parser(this.props.t('QuienesSomos.Descripcion'))}</h6></p>
                                                 </ListGroupItem>
                                                 <ListGroupItem className="p-4">
                                                     <Image src="https://i.imgur.com/gr9c9QS.jpg" fluid />
@@ -111,7 +112,7 @@ class QuienesSomos extends Component {
                                                 </ListGroup.Item>
                                                 <ListGroup.Item>
                                                     <Row className="justify-content-md-center ">
-                                                        <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{this.props.t('Generales.IrMapa')}</button>
+                                                        <button className="btn btn-default btn-3d-style  btn-block" onClick={() => this.volver()} >{Parser(this.props.t('Generales.IrMapa'))}</button>
                                                     </Row>
                                                 </ListGroup.Item>
                                             </ListGroup>

@@ -315,12 +315,12 @@ namespace WebApp.Controllers
         {
             if (form["URLImagen1"] != "" && form["URLImagen1"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen1"], EsPrincipal = true, Orden = 1 });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen1"], EsVideo = false, EsPrincipal = true, Orden = 1 });
             }
 
             if (form["URLImagen2"] != "" && form["URLImagen2"] != "null")
             {
-                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen2"], EsPrincipal = true, Orden = 2 });
+                db.ImagenesEmpresa.Add(new ImagenesEmpresa { IdSede = IdSede, UrlImagen = form["URLImagen2"], EsVideo = false,EsPrincipal = true, Orden = 2 });
             }
 
             if (form["URLImagen3"] != "" && form["URLImagen3"] != "null")

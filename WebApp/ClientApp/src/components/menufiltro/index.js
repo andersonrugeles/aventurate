@@ -126,7 +126,7 @@ class MenuFiltro extends Component {
 
                         categorias.map(({ IdCategoria, Nombre, UrlImagen, EnNombre }, i) => (
                           
-                            <li id={`item-f-${IdCategoria}`} key={i} onClick={this.AbrirFiltroFlotante} title={Nombre}  className={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoria === IdCategoria) ? 'itemFilterActiveSub' : ''} >
+                            <li id={`item-f-${IdCategoria}`} key={i} onClick={this.AbrirFiltroFlotante} title={this.props.i18n.language === "en" ? EnNombre : Nombre}  className={this.props.itemsFiltroSeleccionado.some(e => e.IdCategoria === IdCategoria) ? 'itemFilterActiveSub' : ''} >
                                 <OverlayTrigger
                                     placement="bottom"
                                     overlay={
@@ -138,7 +138,7 @@ class MenuFiltro extends Component {
                                     }
                                 >
                                     <a href="#" id={`item-f-${IdCategoria}`} title={ this.props.i18n.language === "en" ? EnNombre : Nombre } >
-                                        <img id={`item-f-${IdCategoria}`} title={this.props.i18n.language === "en" ? EnNombre : Nombre} alt={Nombre} src={`/app-images/${UrlImagen}`} />
+                                        <img id={`item-f-${IdCategoria}`} title={this.props.i18n.language === "en" ? EnNombre : Nombre} alt={this.props.i18n.language === "en" ? EnNombre : Nombre} src={`/app-images/${UrlImagen}`} />
                                     </a>
                                 </OverlayTrigger>
                             </li>

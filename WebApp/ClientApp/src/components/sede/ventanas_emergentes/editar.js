@@ -285,7 +285,7 @@ class EditarSede extends Component {
         form.append('EsVideo8', sede.EsVideo8);
         form.append('EsVideo9', sede.EsVideo9);
         form.append('EsVideo10', sede.EsVideo6);
-        form.append('EsVideo11', sede.EsVideo7);
+        form.append('EsVideo11', sede.EsVideo11);
         form.append('EsVideo12', sede.EsVideo8);
         form.append('EsVideo13', sede.EsVideo9);
         form.append('EsVideo14', sede.EsVideo6);

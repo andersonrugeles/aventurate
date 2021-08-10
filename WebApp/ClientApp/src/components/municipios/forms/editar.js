@@ -180,7 +180,7 @@ class EditarMunicipio extends Component {
         form.append('EsVideo8', municipio.EsVideo8);
         form.append('EsVideo9', municipio.EsVideo9);
         form.append('EsVideo10', municipio.EsVideo6);
-        form.append('EsVideo11', municipio.EsVideo7);
+        form.append('EsVideo11', municipio.EsVideo11);
         form.append('EsVideo12', municipio.EsVideo8);
         form.append('EsVideo13', municipio.EsVideo9);
         form.append('EsVideo14', municipio.EsVideo6);

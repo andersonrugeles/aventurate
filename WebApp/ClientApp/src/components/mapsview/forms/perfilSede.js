@@ -9,7 +9,7 @@ import { Icon } from '@material-ui/core';
 import Header from '../../header';
 import Footer from '../../footer';
 import translate from "../../helpers/translate";
-import { FacebookProvider, Comments, ShareButton, Like } from 'react-facebook';
+import { FacebookProvider, Comments, Like } from 'react-facebook';
 import Parser from 'html-react-parser';
 import ImageGallery from 'react-image-gallery';
 import {FacebookShareButton, FacebookIcon, WhatsappShareButton,FacebookMessengerShareButton,FacebookMessengerIcon, WhatsappIcon   
@@ -27,7 +27,7 @@ class PerfilSede extends Component {
     constructor(props) {
         super(props);
         this.volver = this.volver.bind(this);
-        this.onClickIns = this.onClickIns.bind(this);
+       
 
         this.state = {
             sede: {
@@ -297,7 +297,7 @@ class PerfilSede extends Component {
                                 </ListGroupItem>    
                                 <ListGroupItem>
                                     <Tabs defaultActiveKey="info" variant="pills" transition={false} id="noanim-tab-example">
-                                        <Tab eventKey="info" title={ this.props.t('Sede.Informacion') } className="p-3">
+                                        <Tab eventKey="info" title={this.props.t('Sede.Informacion') } className="p-3">
                                             <h5><u> {this.props.t('Sede.Detalles')}</u></h5>
                                                 <ListGroup className="list-group-flush">
                                                     <ListGroupItem>
@@ -373,7 +373,17 @@ class PerfilSede extends Component {
                                                     </Row>
                                                     <Row className="p-2 m-0">
 
-                                                    
+                                                        {this.state.sede.InstagramUrl !== "" ?
+                                                            <Col sm={12} md={4}>
+                                                                <Row className="justify-content-md-center text-social">
+                                                                    <Col sm={12} md={2} ><h4 className="no-margin-mobile"><i className="fa fa-instagram" aria-hidden="true" /></h4></Col>
+                                                                    <Col sm={12} md={10} ><a target="_blank" href={this.state.sede.FacebookUrl}> {this.state.sede.NombreInstagram}</a></Col>
+                                                                </Row>
+
+                                                            </Col>
+                                                            : ""
+                                                        }
+
 
                                                         {this.state.sede.FacebookUrl !== "" ?
                                                             <Col sm={12} md={4}>

@@ -241,7 +241,7 @@ class CrearSede extends Component {
         file.append('URLImagen8', sede.URLImagen8);
         file.append('URLImagen9', sede.URLImagen9);
         file.append('URLImagen10', sede.URLImagen6);
-        file.append('URLImagen11', sede.URLImagen7);
+        file.append('URLImagen11', sede.URLImagen11);
         file.append('URLImagen12', sede.URLImagen8);
         file.append('URLImagen13', sede.URLImagen9);
         file.append('URLImagen14', sede.URLImagen9);
@@ -256,7 +256,7 @@ class CrearSede extends Component {
         file.append('EsVideo8', sede.EsVideo8);
         file.append('EsVideo9', sede.EsVideo9);
         file.append('EsVideo10', sede.EsVideo6);
-        file.append('EsVideo11', sede.EsVideo7);
+        file.append('EsVideo11', sede.EsVideo11);
         file.append('EsVideo12', sede.EsVideo8);
         file.append('EsVideo13', sede.EsVideo9);
         file.append('EsVideo14', sede.EsVideo6);

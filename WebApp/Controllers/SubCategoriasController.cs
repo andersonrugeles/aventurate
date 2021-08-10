@@ -234,6 +234,7 @@ namespace WebApp.Controllers
 
 
                     subcategoria.Nombre = form["Nombre"];
+                    subcategoria.EnNombre = form["EnNombre"];
                     db.Entry(subcategoria).State = EntityState.Modified;
                     await db.SaveChangesAsync();
                     transacction.Commit();
